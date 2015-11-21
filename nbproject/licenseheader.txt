@@ -1,0 +1,10 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Proyecto upnaTRay
+${licensePrefix}Computación Gráfica - Máster Universitario en Ingeniería Informática
+${licensePrefix}Curso 2015-2016 - Universidad Pública de Navarra
+${licensePrefix}Iñigo Aguas Ardaiz
+<#if licenseLast??>
+${licenseLast}
+</#if>
