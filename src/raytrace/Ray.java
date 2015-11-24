@@ -15,6 +15,9 @@ import primitives.Vector3D;
  */
 public class Ray {
     
+    Point3D point;
+    Vector3D vector;
+    
     public Ray (final Point3D R, final Point3D Q){
         
     }

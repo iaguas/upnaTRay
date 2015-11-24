@@ -14,7 +14,7 @@ import projection.Camera;
  */
 public abstract class RayGenerator {
     
-    public RayGenerator (final Camera cam, final int W, final int H){
+    protected RayGenerator (final Camera cam, final int W, final int H){
         
     }
     

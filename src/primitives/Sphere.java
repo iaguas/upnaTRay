@@ -16,16 +16,23 @@ import raytrace.Ray;
  */
 public class Sphere extends Object3D {
     
+    private final Point3D center;
+    private final float radius;
+    
     /**
-     * Constructor
-     * @param c 
+     * Constructor de la esfera.
+     * @param color Color especificado en sRGB del objeto.
+     * @param center Centro de la esfera.
+     * @param radius Radio de la esfera.
      */
-    public Sphere (final Color c){
-        super(c);
+    public Sphere (final Color color, final Point3D center, final float radius){
+        super(color);
+        this.center = center;
+        this.radius = radius;        
     }
 
     @Override
-    Hit intersect(Ray r, float tmin) {
+    public Hit intersect(Ray r, float tmin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

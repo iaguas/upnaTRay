@@ -32,7 +32,7 @@ public class Group extends Object3D {
     // en la estructura llamando a sus respectivos metodos de interseccion
 
     @Override
-    Hit intersect(Ray r, float tmin) {
+    public Hit intersect(Ray r, float tmin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

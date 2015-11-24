@@ -14,5 +14,9 @@ import javax.vecmath.Tuple4f;
  * @author aguas
  */
 public class Vector3D extends Tuple4f {
+   
+   public Vector3D(final Point3D a, final Point3D b){
+       
+   }
     
 }

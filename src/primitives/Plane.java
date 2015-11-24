@@ -16,16 +16,24 @@ import raytrace.Ray;
  */
 public class Plane extends Object3D {
     
-    Point3D p;
+    private final Point3D point;
+    private final Vector3D normal;
     // Vector normal al plano
     
-    public Plane(final Color c, final Point3D p){//, Vector)
-        super(c);
-        this.p = p;
+    /**
+     * Constructor de un plano
+     * @param color Color espeficado en sRGB del objeto.
+     * @param point Punto del plano.
+     * @param normal Vector normal al plano.
+     */
+    public Plane(final Color color, final Point3D point, final Vector3D normal){
+        super(color);
+        this.point = point;
+        this.normal = normal;
     }
 
     @Override
-    Hit intersect(Ray r, float tmin) {
+    public Hit intersect(Ray r, float tmin) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

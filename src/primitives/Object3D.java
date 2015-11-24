@@ -17,14 +17,14 @@ import raytrace.Ray;
 public abstract class Object3D {
     
     // Argumento de la clase Color.
-    Color c;
+    private final Color color;
     
     /**
      * Constructor
-     * @param c
+     * @param color
      */
-    public Object3D(final Color c){
-        this.c = c;
+    public Object3D(final Color color){
+        this.color = color;
     }
     
     /**
@@ -37,6 +37,6 @@ public abstract class Object3D {
      *           * En caso contrario devuelve un objeto de la clase Hit con la 
      *             información del punto de intersección
      */
-    abstract Hit intersect (final Ray r, final float tmin);
+    public abstract Hit intersect (final Ray r, final float tmin);
     
 }
