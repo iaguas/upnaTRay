@@ -38,12 +38,19 @@ public class Camera {
         // TODO Luego hay que crear en algún momento la matriz de transformación (transformacion.vista.pdf)
     }
     
-    
     public RayGenerator getRayGenerator (final int W, final int H) {
         return lente.getRayGenerator(this, W, H); // Esto se soluciona al acabar la lente
     }
     //donde lente es el nombre del atributo empleado para referenciar a la
     // proyeccion asociada a la camara
+    
+    /**
+     * Devuelve la projección que está siendo utilizada.
+     * @return En un objeto de tipo Projection es devuelta la projección.
+     */
+    public Projection getProjection(){
+        return lent;
+    }
 
     
 }

@@ -6,14 +6,27 @@
  */
 package main;
 
+import java.awt.Color;
 import primitives.Group;
 import projection.Camera;
+import raytrace.Hit;
+import raytrace.Ray;
+import raytrace.RayGenerator;
 
 /**
  *
  * @author inigo.aguas
  */
 public class Image {
+    
+    int W, H; // Tamaño de la ventana
+    Color backgroundColor;
+    
+    public Image(int W, int H, Color backColor){
+        this.W = W;
+        this.H = H;
+        this.backgroundColor = backColor;
+    }
     
     /**
      * Este método realiza una iteración sobre los píexeles de la imagen para 
@@ -23,13 +36,22 @@ public class Image {
      */
     public void synthesis (final Group scene, final Camera cam){
         // Genera un rayo usando la cámara y la proyección proporcionadas.
+        final float tmin = cam.getProjection().getDistance();
+	final RayGenerator rg = cam.getRayGenerator(W,H);
         
         // Calcula la intersercción con el grupo de objectos de la escena.
-        
-        // Calcula el valor de color del píxel en base al resultado de la 
-        // intersección y a la iluminación aplicada sobre él.
-        
-        // Si el rayo no choca con ningún pixel, se aplica el color de fondo.
+	for (int m=0; m<W; ++m)
+		for(int n=0; n<H; ++n){
+			final Ray ray = rg.getRay(m,n);
+                // Calcula el valor de color del píxel en base al resultado de la 
+                // intersección y a la iluminación aplicada sobre él.
+			final Hit hit = scene.intersect(ray, tmin);
+			if(hit.hits())
+				putPixel(m, n, hit.getColor());
+			else
+                             // Si el rayo no choca con ningún pixel, se aplica el color de fondo.
+				putPixel(m, n, backgroundColor);
+                }
     }
     
 }
