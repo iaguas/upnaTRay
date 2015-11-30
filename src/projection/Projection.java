@@ -43,7 +43,10 @@ public abstract class Projection {
      */
     abstract RayGenerator getRayGenerator (final Camera cam, final int w, final int h);
     
-
+    /**
+     * Conocer la distancia a la que se produce la intersección del rayo.
+     * @return Un float con la distancia.
+     */
     public float getDistance(){
         return distance;
     }
