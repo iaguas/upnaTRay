@@ -43,4 +43,9 @@ public abstract class Projection {
      */
     abstract RayGenerator getRayGenerator (final Camera cam, final int w, final int h);
     
+
+    public float getDistance(){
+        return distance;
+    }
+    
 }

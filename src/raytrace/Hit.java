@@ -1,9 +1,8 @@
 /*
  * Proyecto upnaTRay
- * Computaci�n Gr�fica - M�ster Universitario en Ingenier�a Inform�tica
- * Curso 2015-2016 - Universidad P�blica de Navarra
- * I�igo Aguas Ardaiz
- *  * Each line should be prefixed with  * 
+ * Computacion Grafica - Master Universitario en Ingenieria Informatica
+ * Curso 2015-2016 - Universidad Publica de Navarra
+ * Iñigo Aguas Ardaiz
  */
 package raytrace;
 
@@ -13,7 +12,7 @@ import primitives.Vector3D;
 
 /**
  *
- * @author aguas
+ * @author inigo.aguas
  */
 public class Hit {
     
@@ -37,5 +36,21 @@ public class Hit {
         this.intersectionPoint = intersectionPoint;
         this.normal = normal;
         this.color = color;
+    }
+    
+    /**
+     * Método para conocer si existe intersección entre el objeto y el rayo.
+     * @return Devuelve un booleano acorde a lo anterior.
+     */
+    public boolean hits(){
+        return this.t == Float.POSITIVE_INFINITY;
+    }
+
+    /**
+     * Método para conocer el color del punto de intersección.
+     * @return Una variable de tipo Color con el color concreto.
+     */
+    public Color getColor(){
+        return color;
     }
 }
