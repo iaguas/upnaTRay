@@ -12,11 +12,9 @@ import javax.vecmath.Tuple4f;
  *
  * @author inigo.aguas
  */
-public class Point3D {
+public class Point3D extends Tuple4f{
     
-    private Tuple4f tuple; 
-    
-    public Point3D (final float x, final float y, final float z, final float w){
-        
+    public Point3D (final float x, final float y, final float z){
+        super(x, y, z, 1);       
     }
 }

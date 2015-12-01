@@ -16,7 +16,7 @@ import javax.vecmath.Tuple4f;
 public class Vector3D extends Tuple4f {
    
    public Vector3D(final Point3D a, final Point3D b){
-       
+       super(b.x-a.x, b.y-a.y, b.z-a.z, 0);
    }
     
 }
