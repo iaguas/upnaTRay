@@ -47,22 +47,24 @@ public class Camera {
         
         // Creación de la matriz de transformación
         transformMatrix = new Matrix4f();
-        transformMatrix.setColumn(1,
+        transformMatrix.setColumn(0,
             (float) t * (up.y*oplook.z - up.z*oplook.y),
             (float) t * (up.z*oplook.x - up.x*oplook.z),
             (float) t * (up.x*oplook.y - up.y*oplook.x),
             0);
-        transformMatrix.setColumn(2,
+        transformMatrix.setColumn(1,
             (float) t * (up.x-s*oplook.x),
             (float) t * (up.y-s*oplook.y),
             (float) t * (up.z-s*oplook.z),
             0);
-        transformMatrix.setColumn(3, new Vector4f(oplook));
-        transformMatrix.setColumn(4, new Vector4f(viewPoint));
+        transformMatrix.setColumn(2, new Vector4f(oplook));
+        transformMatrix.setColumn(3, new Vector4f(viewPoint));
     }
     
-    public Vector3D toSceneCoord(Point3D R) {
-        return new Vector3D(
+    public Point3D toSceneCoord(Point3D R) {
+        //transformMatrix.transform(R);
+        
+        return new Point3D(
             transformMatrix.m00*R.x + transformMatrix.m01*R.y + transformMatrix.m02*R.z + transformMatrix.m03*R.w,
             transformMatrix.m10*R.x + transformMatrix.m11*R.y + transformMatrix.m12*R.z + transformMatrix.m13*R.w,
             transformMatrix.m20*R.x + transformMatrix.m21*R.y + transformMatrix.m22*R.z + transformMatrix.m23*R.w,
@@ -94,7 +96,7 @@ public class Camera {
      * Se elije la proyección con la que se debe llevar a cabo la renderización.
      * @param proj Un objecto de tipo Projection para mostar cómo debe hacerse esta.
      */
-    void setProjection(final Projection proj){
+    public void setProjection(final Projection proj){
         lent = proj;
     }
 }
