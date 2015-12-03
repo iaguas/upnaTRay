@@ -31,4 +31,12 @@ public class Ray {
     public Point3D pointAtParameter (final float t){
         return new Point3D(point.x+t*vector.x, point.y+t*vector.y, point.z+t*vector.z);
     }
+    
+    public Point3D getOrigin (){
+        return new Point3D(point);
+    }
+
+    public Vector3D getVector() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

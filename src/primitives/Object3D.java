@@ -17,7 +17,7 @@ import raytrace.Ray;
 public abstract class Object3D {
     
     // Argumento de la clase Color.
-    private final Color color;
+    protected final Color color;
     
     /**
      * Constructor
