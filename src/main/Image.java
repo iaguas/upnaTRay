@@ -7,8 +7,13 @@
 package main;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import primitives.Group;
 import projection.Camera;
+import projection.Projection;
 import raytrace.Hit;
 import raytrace.Ray;
 import raytrace.RayGenerator;
@@ -21,11 +26,13 @@ public class Image {
     
     int W, H; // Tamaño de la ventana
     Color backgroundColor;
+    BufferedImage bimg;
     
     public Image(int W, int H, Color backColor){
         this.W = W;
         this.H = H;
         this.backgroundColor = backColor;
+        this.bimg = new BufferedImage(W, H, BufferedImage.TYPE_INT_ARGB);
     }
     
     /**
@@ -47,11 +54,35 @@ public class Image {
                 // intersección y a la iluminación aplicada sobre él.
 			final Hit hit = scene.intersect(ray, tmin);
 			if(hit.hits())
-				putPixel(m, n, hit.getColor());
+                            putPixel(m, n, hit.getColor());
 			else
-                             // Si el rayo no choca con ningún pixel, se aplica el color de fondo.
-				putPixel(m, n, backgroundColor);
+                            // Si el rayo no choca con ningún pixel, se aplica el color de fondo.
+                            putPixel(m, n, backgroundColor);
                 }
     }
     
+    public void putPixel(int m, int n, Color color){
+        bimg.setRGB(m, H-1-n, color.getRGB());
+    }   
+    
+    public int getWidth(){
+        return W;
+    }
+    
+    public int getHeight(){
+        return H;
+    } 
+    
+    public BufferedImage getBufferedImage(){
+        return bimg;
+    }
+    
+    
+    public void dibujar(){
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(new JLabel(new ImageIcon(this.bimg)));
+        frame.pack();
+        frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
 }
