@@ -7,6 +7,7 @@
 package primitives;
 
 import javax.vecmath.Tuple4f;
+import javax.vecmath.Vector3f;
 
 /**
  *
@@ -52,5 +53,9 @@ public class Vector3D extends Tuple4f {
     
     public Point3D sumPoint(Point3D P){
         return new Point3D(this.x+P.x, this.y+P.y, this.z+P.z);
+    }
+
+    Vector3f getVector3f() {
+        return new Vector3f(this.x, this.y, this.z);
     }
 }
