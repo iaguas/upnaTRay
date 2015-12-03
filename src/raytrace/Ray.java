@@ -19,13 +19,16 @@ public class Ray {
     Vector3D vector;
     
     public Ray (final Point3D R, final Point3D Q){
-        
+        this.point = R;
+        this.vector = (Q.substract(R)).normalize();
     }
+    
     public Ray (final Point3D R, final Vector3D v){
-        
+        this.point = R;
+        this.vector = v.normalize();
     }
     
     public Point3D pointAtParameter (final float t){
-        return null;
+        return new Point3D(point.x+t*vector.x, point.y+t*vector.y, point.z+t*vector.z);
     }
 }
