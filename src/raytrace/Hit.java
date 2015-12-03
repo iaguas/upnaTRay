@@ -43,7 +43,7 @@ public class Hit {
      * @return Devuelve un booleano acorde a lo anterior.
      */
     public boolean hits(){
-        return this.t == Float.POSITIVE_INFINITY;
+        return this.t != Float.POSITIVE_INFINITY;
     }
 
     /**
