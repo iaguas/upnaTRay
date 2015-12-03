@@ -36,7 +36,7 @@ public class Ray {
         return new Point3D(point);
     }
 
-    public Vector3D getVector() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Vector3D getDirection() {
+        return new Vector3D(vector);
     }
 }

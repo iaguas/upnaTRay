@@ -51,6 +51,10 @@ public class Hit {
      * @return Una variable de tipo Color con el color concreto.
      */
     public Color getColor(){
-        return color;
+        return this.color;
+    }
+
+    public float getT() {
+        return t;
     }
 }
