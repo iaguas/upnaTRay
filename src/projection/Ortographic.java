@@ -45,8 +45,7 @@ public class Ortographic extends Projection {
             final float x = (m + 0.5f) * cam.getProjection().w/W - cam.getProjection().w*0.5f;
             final float y = (n + 0.5f) * cam.getProjection().h/H - cam.getProjection().h*0.5f;
             final float z = 0.0f;
-            final Point3D R = new Point3D(x, y, z);
-            cam.toSceneCoord(R);
+            Point3D R = cam.toSceneCoord(new Point3D(x, y, z));
             return new Ray(R, cam.getLook());
         }
         

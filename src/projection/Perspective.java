@@ -28,7 +28,7 @@ public class Perspective extends Projection {
     public Perspective(final float distance, final float angle, final float aspect) {
         // No utilizamos el constructor super para calcular h y w.
         this.distance = distance;
-        this.angle = angle;
+        this.angle = (float) Math.toRadians(angle);
         this.aspect = aspect;
         // Calculamos también las dimensiones.
         this.h = 2 * distance * (float) Math.tan(angle*0.5f);
@@ -54,10 +54,8 @@ public class Perspective extends Projection {
             final float x = (m + 0.5f) * cam.getProjection().w/W - cam.getProjection().w*0.5f;
             final float y = (n + 0.5f) * cam.getProjection().h/H - cam.getProjection().h*0.5f;
             final float z = -cam.getProjection().distance;
-            final Point3D R = new Point3D(x, y, z);
-            cam.toSceneCoord(R);
-            //return new Ray(R, cam.getLook()); // Diferente con dos puntos (dani)   
-            return new Ray(R, cam.getPoint());
+            final Point3D R = cam.toSceneCoord(new Point3D(x, y, z));
+            return new Ray(cam.getPoint(), R);
         }
         
     }
