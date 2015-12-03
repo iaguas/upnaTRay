@@ -18,9 +18,11 @@ public abstract class Projection {
     // * Anchura w de la ventana de proyeccion
     // * Altura h de la ventana de proyeccion
     
-    private float distance;
-    private float w;
-    private float h;
+    protected float distance;
+    protected float w;
+    protected float h;
+    
+    public Projection (){}
     
     /**
      * Constructor de la proyección

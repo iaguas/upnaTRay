@@ -6,6 +6,7 @@
  */
 package projection;
 
+import primitives.Point3D;
 import raytrace.Ray;
 import raytrace.RayGenerator;
 
@@ -17,12 +18,11 @@ public class Ortographic extends Projection {
 
     /**
      * 
-     * @param distance
      * @param w
      * @param h 
      */
-    public Ortographic(final float distance, final float w, final float h) {
-        super(distance, w, h);
+    public Ortographic(final float w, final float h) {
+        super(0.0f, w, h);
     }
     
     @Override
@@ -31,17 +31,23 @@ public class Ortographic extends Projection {
     }
     
     
+    /**
+     * Clase interna privada para el generador de rayos de la proy. ortográfica.
+     */
     private static class OrtographicRayGenerator extends RayGenerator {
 
         public OrtographicRayGenerator(final Camera cam, final int W, final int H) {
             super(cam, W, H);
         }
-
-        // En el pdf está como hacerlo cuando habla de la clase Ray Generator
         
         @Override
         public Ray getRay(int m, int n) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            final float x = (m + 0.5f) * cam.getProjection().w/W - cam.getProjection().w*0.5f;
+            final float y = (n + 0.5f) * cam.getProjection().h/H - cam.getProjection().h*0.5f;
+            final float z = 0.0f;
+            final Point3D R = new Point3D(x, y, z);
+            cam.toSceneCoord(R);
+            return new Ray(R, cam.getLook());
         }
         
     }
