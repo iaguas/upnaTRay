@@ -76,13 +76,4 @@ public class Image {
     public BufferedImage getBufferedImage(){
         return bimg;
     }
-    
-    
-    public void dibujar(){
-        JFrame frame = new JFrame();
-        frame.getContentPane().add(new JLabel(new ImageIcon(this.bimg)));
-        frame.pack();
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
 }
