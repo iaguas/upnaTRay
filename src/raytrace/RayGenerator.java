@@ -14,8 +14,13 @@ import projection.Camera;
  */
 public abstract class RayGenerator {
     
-    protected RayGenerator (final Camera cam, final int W, final int H){
-        
+    protected Camera cam;
+    protected int W, H;
+    
+    protected RayGenerator(final Camera cam, final int W, final int H){
+        this.cam = cam;
+        this.W = W;
+        this.H = H;
     }
     
     public abstract Ray getRay (final int m, final int n);    
