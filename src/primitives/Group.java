@@ -7,6 +7,8 @@
 package primitives;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Iterator;
 import raytrace.Hit;
 import raytrace.Ray;
 
@@ -16,24 +18,35 @@ import raytrace.Ray;
  */
 public class Group extends Object3D {
     
-    public Group(final Color c) {
-        super(c);
+    ArrayList<Object3D> list = new ArrayList<>();
+    
+    public Group() {
+        super(Color.BLACK);
     }
     
-    void addObject (final int index, final Object3D obj){
-        
+    public void addObject (final int index, final Object3D obj){
+        list.add(index, obj);
     }
     
-    Object3D getObject (final int index){
-        return null;
+    public Object3D getObject (final int index){
+        return list.get(index);
     }
     
     // El metodo intersect()de esta subclase itera por los objetos almacenados 
     // en la estructura llamando a sus respectivos metodos de interseccion
 
     @Override
-    public Hit intersect(Ray r, float tmin) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Hit intersect(Ray r, float tmin){
+        Hit hmin = Hit.VoidHit;
+        Iterator<Object3D> it = list.iterator();
+	while (it.hasNext()) {
+            Hit h = it.next().intersect(r, tmin);
+            if(hmin.getT() > h.getT()){
+                hmin = h;
+            }
+	}
+    
+        return hmin;
     }
     
 }
