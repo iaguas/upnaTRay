@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import primitives.Group;
 import primitives.Point3D;
 import primitives.Sphere;
+import primitives.Triangle;
 import primitives.Vector3D;
 import projection.Camera;
 import projection.Ortographic;
@@ -31,7 +32,7 @@ public class UpnaTRay {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Image img = basicOrtographicSphereImage();
+        Image img = basicOrtographicTriangleImage();
         
         //BufferedImage img = ImageIO.read( new File("prueba.jpg"));
         JFrame canvas = new JFrame();
@@ -64,6 +65,18 @@ public class UpnaTRay {
         Group scene = new Group();
         scene.addObject(0, new Sphere(Color.BLUE, new Point3D(0,0,0), 20));
         scene.addObject(0,new Sphere(Color.ORANGE, new Point3D(0,30,0), 30));
+        img.synthesis(scene, cam);
+        return img;
+    }
+    
+        private static Image basicOrtographicTriangleImage(){
+        Image img = new Image(200, 200, Color.WHITE);
+        Camera cam = new Camera(new Point3D(200,0,0), new Vector3D(-1,0,0), new Vector3D(0.0f,1.0f,0.0f));
+        Ortographic ort = new Ortographic(150, 150);
+        //Perspective ort = new Perspective(50, 45, 1f);
+        cam.setProjection(ort);
+        Group scene = new Group();
+        scene.addObject(0, new Triangle(Color.BLUE, new Point3D(50,50,0),  new Point3D(0,0,0),new Point3D(100,0,0), new Vector3D(1,0,0)));
         img.synthesis(scene, cam);
         return img;
     }
