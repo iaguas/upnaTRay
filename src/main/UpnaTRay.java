@@ -11,8 +11,11 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import parser.Parser;
 import primitives.Group;
 import primitives.Point3D;
 import primitives.Sphere;
@@ -20,6 +23,7 @@ import primitives.Triangle;
 import primitives.Vector3D;
 import projection.Camera;
 import projection.Ortographic;
+import projection.Projection;
 import projection.Perspective;
 
 /**
@@ -31,10 +35,9 @@ public class UpnaTRay {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         Image img = basicOrtographicTriangleImage();
-        
-        //BufferedImage img = ImageIO.read( new File("prueba.jpg"));
+        //Image img = generateImage("scenes/scene0");
         JFrame canvas = new JFrame();
         canvas.setSize(img.getWidth()+16,img.getHeight()+38);
         canvas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,6 +45,19 @@ public class UpnaTRay {
         Container pane = canvas.getContentPane();
         pane.add(new ColorPanel(img));
         canvas.setVisible(true);  
+    }
+    
+    private static Image generateImage(String filename) throws Exception{
+        BufferedReader br = new BufferedReader(new FileReader(filename));
+        Parser parser = new Parser(br);
+        Camera cam = parser.parseCamera();
+        Projection proj = parser.parseProjection();
+        cam.setProjection(proj);
+        Color bcolor = parser.parseBackgroundColor();
+        Group scene = parser.parseGroup();
+        Image img = new Image(1000, 1000, bcolor);
+        img.synthesis(scene, cam);
+        return img;
     }
     
     private static Image basicOrtographicSphereImage(){

@@ -16,12 +16,18 @@ import raytrace.Ray;
  *
  * @author inigo.aguas
  */
-public class Group extends Object3D {
+public class Group extends Object3D{
     
-    ArrayList<Object3D> list = new ArrayList<>();
+    ArrayList<Object3D> list;
     
-    public Group() {
+    public Group(){
         super(Color.BLACK);
+        list = new ArrayList<>();
+    }
+    
+    public Group(int numElements){
+        super(Color.BLACK);
+        list = new ArrayList<>(numElements);
     }
     
     public void addObject (final int index, final Object3D obj){

@@ -61,6 +61,10 @@ public class Camera {
         transformMatrix.setColumn(3, new Vector4f(viewPoint));
     }
     
+    public Camera(final Point3D viewPoint, final Point3D look, final Vector3D up){
+        this(viewPoint, new Vector3D(viewPoint, look), up);
+    }
+    
     public Point3D toSceneCoord(Point3D R) {
         //transformMatrix.transform(R);
         
