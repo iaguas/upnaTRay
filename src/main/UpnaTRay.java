@@ -76,7 +76,7 @@ public class UpnaTRay {
         //Perspective ort = new Perspective(50, 45, 1f);
         cam.setProjection(ort);
         Group scene = new Group();
-        scene.addObject(0, new Triangle(Color.BLUE, new Point3D(50,50,0),  new Point3D(0,0,0),new Point3D(100,0,0), new Vector3D(1,0,0)));
+        scene.addObject(0, new Triangle(Color.BLUE, new Point3D(50,50,0),  new Point3D(0,0,0),new Point3D(100,0,0)));
         img.synthesis(scene, cam);
         return img;
     }
