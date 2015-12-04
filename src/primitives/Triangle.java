@@ -29,27 +29,28 @@ public class Triangle extends Object3D {
      * @param b Punto del triángulo.
      * @param c Punto del triángulo.
      * @param color Color especificado en sRGB del objeto.
-     * @param normal Vector normal al triángulo.
      */
-    public Triangle(final Color color, final Point3D a, final Point3D b, final Point3D c, final Vector3D normal) {
+    public Triangle(final Color color, final Point3D a, final Point3D b, final Point3D c) {
         super(color);
         this.a = a;
         this.b = b;
         this.c = c;
-        this.normal = normal.normalize();
+        Vector3D AB = new Vector3D(a, b);
+        Vector3D AC = new Vector3D(c, a);
+        this.normal = (AB.vecprod(AC)).normalize();
     }
 
     @Override
     public Hit intersect(Ray r, float tmin){
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
-        Vector3D normal = (new Vector3D(this.a, this.b)).vecprod(new Vector3D(this.a, this.c));
-        float c = normal.escprod(r.getDirection());
+        Vector3D norm = (new Vector3D(this.a, this.b)).vecprod(new Vector3D(this.a, this.c));
+        float cc = norm.escprod(r.getDirection());
         
-        if (c < 0){ // Intersección por la cara exterior.
-            float b = normal.escprod(new Vector3D(a, r.getOrigin()));
-            if (b >= 0) { // Intersección en el semiespacio posterior.
-                final float alpha = -b / c;
+        if (cc < 0){ // Intersección por la cara exterior.
+            float bb = norm.escprod(new Vector3D(a, r.getOrigin()));
+            if (bb >= 0) { // Intersección en el semiespacio posterior.
+                final float alpha = -bb / cc;
                 //float[] result = new float[2];
                 float[] result = solve(new Vector3D(this.a, this.b), 
                                        new Vector3D(this.a, this.c), 
@@ -60,7 +61,7 @@ public class Triangle extends Object3D {
                 if ((beta >= 0) && (beta <= 1)){
                     if ((gamma >= 0) && (gamma <= 1)){ 
                         if ((gamma >= 0) && (gamma <= 1)){ 
-                            return new Hit(alpha, r.pointAtParameter(alpha), normal, color);
+                            return new Hit(alpha, r.pointAtParameter(alpha), norm, color);
                         }
                     }
                 }
