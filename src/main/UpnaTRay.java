@@ -36,7 +36,9 @@ public class UpnaTRay {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception{
-        Image img = basicOrtographicTriangleImage();
+        //Image img = basicOrtographicTriangleImage();
+        Image img = basicOrtographicSphereImage();
+        //Image img = basicPerspectiveSphereImage();
         //Image img = generateImage("scenes/scene0");
         JFrame canvas = new JFrame();
         canvas.setSize(img.getWidth()+16,img.getHeight()+38);
