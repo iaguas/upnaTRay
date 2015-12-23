@@ -37,9 +37,9 @@ public class UpnaTRay {
      */
     public static void main(String[] args) throws Exception{
         //Image img = basicOrtographicTriangleImage();
-        Image img = basicOrtographicSphereImage();
+        //Image img = basicOrtographicSphereImage();
         //Image img = basicPerspectiveSphereImage();
-        //Image img = generateImage("scenes/scene0");
+        Image img = generateImage("scenes/scene0");
         JFrame canvas = new JFrame();
         canvas.setSize(img.getWidth()+16,img.getHeight()+38);
         canvas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,8 +50,7 @@ public class UpnaTRay {
     }
     
     private static Image generateImage(String filename) throws Exception{
-        BufferedReader br = new BufferedReader(new FileReader(filename));
-        Parser parser = new Parser(br);
+        Parser parser = new Parser(new BufferedReader(new FileReader(filename)));
         Camera cam = parser.parseCamera();
         Projection proj = parser.parseProjection();
         cam.setProjection(proj);

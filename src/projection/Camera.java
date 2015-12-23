@@ -36,9 +36,9 @@ public class Camera {
         this.viewPoint = viewPoint;
         
         // Base ortonormal dextrógira 
-        this.zbase = new Vector3D(look);
+        this.zbase = new Vector3D(look.oposite());
         this.xbase = (up.vecprod(zbase)).normalize();
-        this.ybase = zbase.vecprod(xbase);
+        this.ybase = zbase.vecprod(xbase).normalize();
         
         // Parámetros para la matriz de transformación
         float s = up.escprod(look);
