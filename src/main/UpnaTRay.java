@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -39,7 +40,7 @@ public class UpnaTRay {
         //Image img = basicOrtographicTriangleImage();
         //Image img = basicOrtographicSphereImage();
         //Image img = basicPerspectiveSphereImage();
-        Image img = generateImage("scenes/scene0");
+        Image img = generateImage("scenes" + File.separator + "scene0");
         JFrame canvas = new JFrame();
         canvas.setSize(img.getWidth()+16,img.getHeight()+38);
         canvas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +57,7 @@ public class UpnaTRay {
         cam.setProjection(proj);
         Color bcolor = parser.parseBackgroundColor();
         Group scene = parser.parseGroup();
-        Image img = new Image(1000, 1000, bcolor);
+        Image img = new Image(800, 800, bcolor);
         img.synthesis(scene, cam);
         return img;
     }
@@ -86,7 +87,7 @@ public class UpnaTRay {
         return img;
     }
     
-        private static Image basicOrtographicTriangleImage(){
+    private static Image basicOrtographicTriangleImage(){
         Image img = new Image(200, 200, Color.WHITE);
         Camera cam = new Camera(new Point3D(200,0,0), new Vector3D(-1,0,0), new Vector3D(0.0f,1.0f,0.0f));
         Ortographic ort = new Ortographic(150, 150);

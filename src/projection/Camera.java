@@ -36,27 +36,28 @@ public class Camera {
         this.viewPoint = viewPoint;
         
         // Base ortonormal dextrógira 
-        this.zbase = new Vector3D(look.oposite());
+        this.zbase = new Vector3D(look.oposite().normalize());
         this.xbase = (up.vecprod(zbase)).normalize();
-        this.ybase = zbase.vecprod(xbase).normalize();
+        this.ybase = zbase.vecprod(xbase); // normalizar es innecesario si los otros lo están
         
         // Parámetros para la matriz de transformación
-        float s = up.escprod(look);
+        Vector3D oplook = look.oposite().normalize();
+        float s = up.escprod(oplook);
         double t = Math.pow(1-s*s, -0.5f);
-        Vector3D oplook = look.oposite();
         
         // Creación de la matriz de transformación
         transformMatrix = new Matrix4f();
         transformMatrix.setColumn(0,
             (float) t * (up.y*oplook.z - up.z*oplook.y),
             (float) t * (up.z*oplook.x - up.x*oplook.z),
-            (float) t * (up.x*oplook.y - up.y*oplook.x),
-            0);
+            (float) t * (up
+                    .x*oplook.y - up.y*oplook.x),
+            0.0f);
         transformMatrix.setColumn(1,
             (float) t * (up.x-s*oplook.x),
             (float) t * (up.y-s*oplook.y),
             (float) t * (up.z-s*oplook.z),
-            0);
+            0.0f);
         transformMatrix.setColumn(2, new Vector4f(oplook));
         transformMatrix.setColumn(3, new Vector4f(viewPoint));
     }
@@ -89,7 +90,7 @@ public class Camera {
     }
 
     Vector3D getLook() {
-        return new Vector3D(zbase);
+        return new Vector3D(zbase.oposite());
     }
 
     Point3D getPoint() {

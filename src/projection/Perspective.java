@@ -16,8 +16,8 @@ import raytrace.RayGenerator;
  */
 public class Perspective extends Projection {
 
-    private float angle;
-    private float aspect;
+    private final float angle;
+    private final float aspect;
     
     /**
      * Constructor de la proyección en perspectiva
@@ -26,7 +26,7 @@ public class Perspective extends Projection {
      * @param aspect 
      */
     public Perspective(final float distance, final float angle, final float aspect) {
-        // No utilizamos el constructor super para calcular h y w.
+        // No utilizamos el constructor super para calcular h y w pq tendría que ser lo primero.
         this.distance = distance;
         this.angle = (float) Math.toRadians(angle);
         this.aspect = aspect;
