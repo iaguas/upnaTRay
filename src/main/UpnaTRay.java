@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import parser.Parser;
 import primitives.Group;
+import primitives.Plane;
 import primitives.Point3D;
 import primitives.Sphere;
 import primitives.Triangle;
@@ -37,6 +38,7 @@ public class UpnaTRay {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception{
+        //Image img = basicOrtographicPlaneImage();
         //Image img = basicOrtographicTriangleImage();
         //Image img = basicOrtographicSphereImage();
         //Image img = basicPerspectiveSphereImage();
@@ -99,6 +101,19 @@ public class UpnaTRay {
         return img;
     }
     
+    private static Image basicOrtographicPlaneImage(){
+        Image img = new Image(500, 500, Color.WHITE);
+        Camera cam = new Camera(new Point3D(100,20,100), new Vector3D(-1,0,-1), new Vector3D(0.0f,1.0f,0.0f));
+        //Ortographic ort = new Ortographic(50, 50);
+        Perspective ort = new Perspective(10, 90, 1f);
+        cam.setProjection(ort);
+        Group scene = new Group();
+        scene.addObject(0, new Plane(Color.GREEN, new Point3D(0,0,0), new Vector3D(1,0,0)));
+        scene.addObject(1, new Plane(Color.RED, new Point3D(0,0,0), new Vector3D(0,1,0)));
+        scene.addObject(2, new Plane(Color.BLUE, new Point3D(0,0,0), new Vector3D(0,0,1)));
+        img.synthesis(scene, cam);
+        return img;
+    }    
 }
 
 class ColorPanel extends JPanel{
