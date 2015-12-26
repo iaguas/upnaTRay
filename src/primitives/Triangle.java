@@ -52,15 +52,22 @@ public class Triangle extends Object3D {
             if (bb >= 0) { // Intersección en el semiespacio posterior.
                 final float alpha = -bb / cc;
                 //float[] result = new float[2];
-                float[] result = solve(new Vector3D(this.a, this.b), 
+                /*float[] result = solve(new Vector3D(this.a, this.b), 
                                        new Vector3D(this.a, this.c), 
                                        new Vector3D(this.a, r.getOrigin()), 
                                        r.getDirection());
                 float beta = result[0];
-                float gamma = result[1];
+                float gamma = result[1];*/
+                Vector3D AB = new Vector3D(this.a, this.b);
+                Vector3D AC = new Vector3D(this.a, this.c);
+                Vector3D AR = new Vector3D(this.a, r.getOrigin());
+                final float denom = 1 / r.getDirection().escprod(AC.vecprod(AB));
+                final float beta = -denom * AC.escprod(r.getDirection().vecprod(AR));
+                final float gamma = denom * AB.escprod(r.getDirection().vecprod(AR)); 
+                
                 if ((beta >= 0) && (beta <= 1)){
                     if ((gamma >= 0) && (gamma <= 1)){ 
-                        if ((gamma >= 0) && (gamma <= 1)){ 
+                        if ((beta + gamma) <= 1){ 
                             return new Hit(alpha, r.pointAtParameter(alpha), norm, color);
                         }
                     }
