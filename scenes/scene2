@@ -19,41 +19,41 @@ Group {
 	Sphere {
 		center +5.0 +5.0 +5.0
 		radius 5.0
-		color 255 0.0 0.0
+		color 255 0 0
 	}
 	Sphere {
 		center -5.0 +5.0 +5.0
 		radius 5.0
-		color 0.0 255.0 0.0
+		color 0 255 0
 	}
 	Sphere {
 		center -5.0 -5.0 +5.0
 		radius 5.0
-		color 0.0 0.0 255.0
+		color 0 0 255
 	}
 	Sphere {
 		center +5.0 -5.0 +5.0
 		radius 5.0
-		color 0.0 255.0 255.0
+		color 0 255 255
 	}
 	Sphere {
 		center +5.0 +5.0 -5.0
 		radius 5.0
-		color 155.0 0.0 0.0
+		color 155 0 0
 	}
 	Sphere {
 		center -5.0 +5.0 -5.0
 		radius 5.0
-		color 0.0 155.0 0.0
+		color 0 155 0
 	}
 	Sphere {
 		center -5.0 -5.0 -5.0
 		radius 5.0
-		color 0.0 0.0 155.0
+		color 0 0 155
 	}
 	Sphere {
 		center +5.0 -5.0 -5.0
 		radius 5.0
-		color 0.0 155.0 155.0
+		color 0 155 155
 	}
 }

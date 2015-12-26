@@ -1,6 +1,6 @@
 Camera {
 	position -50.0 50.0 50.0
-	centerOfView 0.0 0.0 0.0
+	focus 0.0 0.0 0.0
 	up 0.0 1.0 0.0
 }
 SemisphericalFisheye {

@@ -4,7 +4,7 @@ Camera {
 	up 0.0 1.0 0.0
 }
 Perspective {
-        distance 5.0
+    distance 5.0
 	fov 25.0
 	aspect 1.0
 }
