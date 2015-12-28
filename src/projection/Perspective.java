@@ -31,7 +31,7 @@ public class Perspective extends Projection {
         this.angle = (float) Math.toRadians(angle);
         this.aspect = aspect;
         // Calculamos también las dimensiones.
-        this.h = 2 * distance * (float) Math.tan(angle*0.5f);
+        this.h = 2 * distance * (float) Math.tan(this.angle*0.5f);
         this.w = aspect * h;
     }
     
