@@ -12,7 +12,7 @@ import raytrace.Hit;
 import raytrace.Ray;
 
 /**
- *
+ * Clase para la representación de un triángulo en la escena.
  * @author inigo.aguas
  */
 public class Triangle extends Object3D {
@@ -21,13 +21,13 @@ public class Triangle extends Object3D {
     private final Point3D a;
     private final Point3D b;
     private final Point3D c;
-    private final Vector3D normal;
+    private final Vector3D normal; // Vector normal al triángulo.
     
     /**
-     * Constructor de un triángulo.
-     * @param a Punto del triángulo.
-     * @param b Punto del triángulo.
-     * @param c Punto del triángulo.
+     * Método constructor de un triángulo.
+     * @param a Vértice a del triángulo.
+     * @param b Vértice b del triángulo.
+     * @param c Vértice c del triángulo.
      * @param color Color especificado en sRGB del objeto.
      */
     public Triangle(final Color color, final Point3D a, final Point3D b, final Point3D c) {
@@ -58,6 +58,7 @@ public class Triangle extends Object3D {
                                        r.getDirection());
                 float beta = result[0];
                 float gamma = result[1];*/
+                // Se evita la implementación de cramer directamente.
                 Vector3D AB = new Vector3D(this.a, this.b);
                 Vector3D AC = new Vector3D(this.a, this.c);
                 Vector3D AR = new Vector3D(this.a, r.getOrigin());
@@ -78,8 +79,8 @@ public class Triangle extends Object3D {
         return Hit.VoidHit;
     }
     
+    // Implementar Cramer
     private float[] solve(Vector3D AB, Vector3D AC, Vector3D AR, Vector3D v){
-        // Implementar Cramer
         
         Matrix3f denominator = new Matrix3f();
         denominator.setColumn(0, AB.getVector3f());

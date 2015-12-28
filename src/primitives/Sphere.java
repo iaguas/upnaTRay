@@ -11,19 +11,19 @@ import raytrace.Hit;
 import raytrace.Ray;
 
 /**
- *
+ * Clase para la representación de una esfera en la escena.
  * @author inigo.aguas
  */
 public class Sphere extends Object3D {
     
-    private final Point3D center;
-    private final float radius;
+    private final Point3D center; // Centro de la esfera.
+    private final float radius; // Radio de la esfera.
     
     /**
-     * Constructor de la esfera.
+     * Método constructor de la esfera.
      * @param color Color especificado en sRGB del objeto.
-     * @param center Centro de la esfera.
-     * @param radius Radio de la esfera.
+     * @param center Centro de la esfera de tipo Point3D.
+     * @param radius Radio R de la esfera.
      */
     public Sphere (final Color color, final Point3D center, final float radius){
         super(color);

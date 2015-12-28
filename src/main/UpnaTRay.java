@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileReader;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import parser.Parser;
 import primitives.Group;
 import primitives.Plane;
@@ -29,19 +30,22 @@ import projection.Projection;
 import projection.Perspective;
 
 /**
- *
+ * Clase principal del proyecto que genera en una ventana la imagen propuesta.
+ * Se le pasa la misma en un archivo y se recoge en un cuadro de texto. // TODO
  * @author inigo.aguas
  */
 public class UpnaTRay {
 
     /**
+     * Método principal del trazador que inicia la ejecución del mismo.
      * @param args the command line arguments
+     * @throws java.lang.Exception
      */
     public static void main(String[] args) throws Exception{
-        //Image img = basicOrtographicPlaneImage();
-        //Image img = basicOrtographicTriangleImage();
         //Image img = basicOrtographicSphereImage();
         //Image img = basicPerspectiveSphereImage();
+        //Image img = basicPerspectivePlaneImage();
+        //Image img = basicOrtographicTriangleImage();
         Image img = generateImage("scenes" + File.separator + "scene0");
         JFrame canvas = new JFrame();
         canvas.setSize(img.getWidth()+16,img.getHeight()+38);
@@ -52,6 +56,12 @@ public class UpnaTRay {
         canvas.setVisible(true);  
     }
     
+    /**
+     * Generador de una imagen para mostrar a partir de un archivo dado.
+     * @param filename Ruta del archivo que contiene la descripción de la escena.
+     * @return Un objeto imagen img que contiene la imagen generada.
+     * @throws Exception (probablemente tendrá que ver con archivos).
+     */
     private static Image generateImage(String filename) throws Exception{
         Parser parser = new Parser(new BufferedReader(new FileReader(filename)));
         Camera cam = parser.parseCamera();
@@ -64,6 +74,10 @@ public class UpnaTRay {
         return img;
     }
     
+    /**
+     * Generador de una imagen para probar la projección ortográfica con esferas.
+     * @return Un objeto imagen img que contiene la imagen generada.
+     */
     private static Image basicOrtographicSphereImage(){
         Image img = new Image(200, 200, Color.WHITE);
         Camera cam = new Camera(new Point3D(200,0,0), new Vector3D(-1,0,0), new Vector3D(0,1,0));
@@ -77,6 +91,10 @@ public class UpnaTRay {
         return img;
     }
     
+    /**
+     * Generador de una imagen para probar la projección en perspectiva con esferas.
+     * @return Un objeto imagen img que contiene la imagen generada.
+     */
     private static Image basicPerspectiveSphereImage(){
         Image img = new Image(200, 200, Color.WHITE);
         Camera cam = new Camera(new Point3D(200,0,0), new Vector3D(-1,0,0), new Vector3D(0,1,0));
@@ -89,6 +107,10 @@ public class UpnaTRay {
         return img;
     }
     
+    /**
+     * Generador de una imagen para probar la projección ortográfica con triángulos.
+     * @return Un objeto imagen img que contiene la imagen generada.
+     */
     private static Image basicOrtographicTriangleImage(){
         Image img = new Image(200, 200, Color.WHITE);
         Camera cam = new Camera(new Point3D(200,0,0), new Vector3D(-1,0,0), new Vector3D(0.0f,1.0f,0.0f));
@@ -101,7 +123,11 @@ public class UpnaTRay {
         return img;
     }
     
-    private static Image basicOrtographicPlaneImage(){
+    /**
+     * Generador de una imagen para probar la projección en perspectiva con planos.
+     * @return Un objeto imagen img que contiene la imagen generada.
+     */
+    private static Image basicPerspectivePlaneImage(){
         Image img = new Image(500, 500, Color.WHITE);
         Camera cam = new Camera(new Point3D(100,20,100), new Vector3D(-1,0,-1), new Vector3D(0.0f,1.0f,0.0f));
         //Ortographic ort = new Ortographic(50, 50);
@@ -116,17 +142,26 @@ public class UpnaTRay {
     }    
 }
 
+/**
+ * Clase para implementar la ventana en la que mostrar la imagen.
+ * @author inigo.aguas
+ */
 class ColorPanel extends JPanel{
-	BufferedImage img;
+	
+    private BufferedImage img; // Argumento en el que se incluye la definición de la imagen.
         
-	public ColorPanel(Image img){
-            this.img = img.getBufferedImage();
-	}
- 
-        @Override
-	public void paintComponent(Graphics g){
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.drawImage(img, null, 0, 0);
-	}
+    /**
+     * Método constructor de la clase dada una imagen.
+     * @param img Imagen img dada para mostrar en la ventana.
+     */
+    public ColorPanel(Image img){
+        this.img = img.getBufferedImage();
+    }
+
+    @Override
+    public void paintComponent(Graphics g){
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.drawImage(img, null, 0, 0);
+    }
 }

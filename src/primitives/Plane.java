@@ -11,17 +11,16 @@ import raytrace.Hit;
 import raytrace.Ray;
 
 /**
- *
+ * Clase para la representación de un plano en la escena.
  * @author inigo.aguas
  */
 public class Plane extends Object3D {
     
-    private final Point3D point;
-    private final Vector3D normal;
-    // Vector normal al plano
+    private final Point3D point; // Punto del plano.
+    private final Vector3D normal; // Vector normal al plano.
     
     /**
-     * Constructor de un plano
+     * Método constructor de un plano.
      * @param color Color espeficado en sRGB del objeto.
      * @param point Punto del plano.
      * @param normal Vector normal al plano.

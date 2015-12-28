@@ -13,7 +13,8 @@ import primitives.Vector3D;
 import raytrace.RayGenerator;
 
 /**
- *
+ * Clase que implementa la cámara del trazador de rayos a la que se le pueden 
+ * "cambiar las lentes" (esto es, las proyecciones).
  * @author inigo.aguas
  */
 public class Camera {
@@ -26,7 +27,7 @@ public class Camera {
     private final Matrix4f transformMatrix; // De camara a escena
     
     /**
-     * Constructor de la cámara
+     * Método constructor de la cámara con el vector de look.
      * @param viewPoint Punto de emplazamiento de la cámara.
      * @param look Vector look (vector que señala la dirección de vista).
      * @param up Vector vertical auxiliar up.
@@ -62,44 +63,69 @@ public class Camera {
         transformMatrix.setColumn(3, new Vector4f(viewPoint));
     }
     
+    /**
+     * Método constructor de la cámara con el punto look y el punto de vista.
+     * @param viewPoint Punto de emplazamiento de la cámara.
+     * @param look Punto look (punto que señala la dirección de vista).
+     * @param up Vector vertical auxiliar up.
+     */
     public Camera(final Point3D viewPoint, final Point3D look, final Vector3D up){
         this(viewPoint, new Vector3D(viewPoint, look), up);
     }
     
-    public Point3D toSceneCoord(Point3D R) {
+    /**
+     * Método para transformar las coordenadas de cámara a escena.
+     * @param P Punto P a transformar según el sistema de coordenadas de la cámara.
+     * @return Un punto cuyas coordenadas responden al sistema de coordenadas de la escena.
+     */
+    public Point3D toSceneCoord(Point3D P) {
         //transformMatrix.transform(R);
         
         return new Point3D(
-            transformMatrix.m00*R.x + transformMatrix.m01*R.y + transformMatrix.m02*R.z + transformMatrix.m03*R.w,
-            transformMatrix.m10*R.x + transformMatrix.m11*R.y + transformMatrix.m12*R.z + transformMatrix.m13*R.w,
-            transformMatrix.m20*R.x + transformMatrix.m21*R.y + transformMatrix.m22*R.z + transformMatrix.m23*R.w,
-            transformMatrix.m30*R.x + transformMatrix.m31*R.y + transformMatrix.m32*R.z + transformMatrix.m33*R.w
+            transformMatrix.m00*P.x + transformMatrix.m01*P.y + transformMatrix.m02*P.z + transformMatrix.m03*P.w,
+            transformMatrix.m10*P.x + transformMatrix.m11*P.y + transformMatrix.m12*P.z + transformMatrix.m13*P.w,
+            transformMatrix.m20*P.x + transformMatrix.m21*P.y + transformMatrix.m22*P.z + transformMatrix.m23*P.w,
+            transformMatrix.m30*P.x + transformMatrix.m31*P.y + transformMatrix.m32*P.z + transformMatrix.m33*P.w
         );
     }
     
+    /**
+     * Método para recuperar el objeto generador de rayos (diferente según la proyección).
+     * @param W Anchura de la imagen de proyección en píxeles.
+     * @param H Altura de la imagen de proyección en píxeles.
+     * @return Devuelve un objeto generador de rayos para el trazador con la lente dispuesta.
+     */
     public RayGenerator getRayGenerator (final int W, final int H) {
         return lent.getRayGenerator(this, W, H);
     }
     
     /**
-     * Devuelve la projección que está siendo utilizada.
-     * @return En un objeto de tipo Projection es devuelta la projección.
+     * Método de acceso a la projección que está siendo utilizada.
+     * @return Devuelve la projección utilizada.
      */
     public Projection getProjection(){
         return lent;
     }
 
+    /**
+     * Método de acceso al vector look.
+     * @return Devuelve el vector look.
+     */
     Vector3D getLook() {
         return new Vector3D(zbase.oposite());
     }
 
+    /** 
+     * Método de acceso al punto de emplazamiento de la cámara.
+     * @return Devuelve el punto de emplazamiento de la cámara.
+     */
     Point3D getPoint() {
         return new Point3D(viewPoint);
     }
     
     /**
-     * Se elije la proyección con la que se debe llevar a cabo la renderización.
-     * @param proj Un objecto de tipo Projection para mostar cómo debe hacerse esta.
+     * Método de definición de la proyección con la que se debe llevar a cabo la renderización.
+     * @param proj Un objecto de tipo Projection con la definición de la projección a utilizar en la renderización.
      */
     public void setProjection(final Projection proj){
         lent = proj;

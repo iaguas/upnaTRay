@@ -11,7 +11,7 @@ import raytrace.Ray;
 import raytrace.RayGenerator;
 
 /**
- *
+ * Implementación de la lente de la cámara para crear una projección en prespectiva.
  * @author inigo.aguas
  */
 public class Perspective extends Projection {
@@ -22,8 +22,8 @@ public class Perspective extends Projection {
     /**
      * Constructor de la proyección en perspectiva
      * @param distance Distancia entre entre el plano de proyección y la cámara.
-     * @param angle En grados
-     * @param aspect 
+     * @param angle Ángulo de la perspectiva en grados.
+     * @param aspect Aspecto de la proyección.
      */
     public Perspective(final float distance, final float angle, final float aspect) {
         // No utilizamos el constructor super para calcular h y w pq tendría que ser lo primero.
@@ -45,6 +45,7 @@ public class Perspective extends Projection {
      */
     private static class PerspectiveRayGenerator extends RayGenerator {
 
+        // Método constructor
         public PerspectiveRayGenerator(final Camera cam, final int W, final int H) {
             super(cam, W, H);
         }

@@ -8,26 +8,30 @@ package main;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import primitives.Group;
 import projection.Camera;
-import projection.Projection;
 import raytrace.Hit;
 import raytrace.Ray;
 import raytrace.RayGenerator;
 
 /**
- *
+ * Clase imágen que incluye la formación de las imágenes 2D a través de la
+ * representación 3D de los objetos de la escena.
  * @author inigo.aguas
  */
 public class Image {
     
-    int W, H; // Tamaño de la ventana
-    Color backgroundColor;
-    BufferedImage bimg;
+    private final int W, H; // Tamaño de la ventana
+    private final Color backgroundColor;
+    private final BufferedImage bimg;
     
+    /**
+     * Método constructor a partir del tamaño de la imagen que se desea y el 
+     * color del fondo para los objetos representados en la escena.
+     * @param W Anchura de la imagen en píxeles.
+     * @param H Altura de la imagen en píxeles.
+     * @param backColor Color del fondo de la imagen representado por la clase Color.
+     */
     public Image(int W, int H, Color backColor){
         this.W = W;
         this.H = H;
@@ -39,7 +43,7 @@ public class Image {
      * Este método realiza una iteración sobre los píexeles de la imagen para 
      * obtener su color. Se basa en BufferedImage y en el espacio de color sRGB.
      * @param scene Grupo de objectos que forman la escena.
-     * @param cam Objeto cámara que mira la escena.
+     * @param cam Cámara que mira la escena.
      */
     public void synthesis (final Group scene, final Camera cam){
         // Genera un rayo usando la cámara y la proyección proporcionadas.
@@ -61,18 +65,36 @@ public class Image {
                 }
     }
     
+    /**
+     * Método para disponer el color de un píxel en su localización adecuada de la imagen.
+     * @param m Posición del píxel en el eje X.
+     * @param n Posición del píxel en el eje Y.
+     * @param color Color del píxel en el espacio sRGB según la clase Color.
+     */
     public void putPixel(int m, int n, Color color){
         bimg.setRGB(m, H-1-n, color.getRGB());
     }   
     
+    /**
+     * Método de acceso a la anchura de la imagen.
+     * @return La anchura W de la imagen en píxeles.
+     */
     public int getWidth(){
         return W;
     }
     
+    /** 
+     * Método de acceso a la altura de la imagen.
+     * @return La altura H de la imagen en píxeles.
+     */
     public int getHeight(){
         return H;
     } 
     
+    /**
+     * Método de acceso a la forma de almacenamiento de la imagen con la clase BufferedImage.
+     * @return El objeto BufferedImage que contiene los píxeles de la misma.
+     */
     public BufferedImage getBufferedImage(){
         return bimg;
     }

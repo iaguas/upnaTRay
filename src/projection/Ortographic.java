@@ -11,15 +11,15 @@ import raytrace.Ray;
 import raytrace.RayGenerator;
 
 /**
- *
+ * Implementación de la lente de la cámara para crear una projección ortográfica.
  * @author inigo.aguas
  */
 public class Ortographic extends Projection {
 
     /**
-     * 
-     * @param w
-     * @param h 
+     * Método constructor de la projección ortográfica.
+     * @param w Anchura de la ventana de projección en píxeles.
+     * @param h Altura de la ventana de projección en píxeles.
      */
     public Ortographic(final float w, final float h) {
         super(0.0f, w, h);
@@ -36,6 +36,7 @@ public class Ortographic extends Projection {
      */
     private static class OrtographicRayGenerator extends RayGenerator {
 
+        // Método constructor
         public OrtographicRayGenerator(final Camera cam, final int W, final int H) {
             super(cam, W, H);
         }

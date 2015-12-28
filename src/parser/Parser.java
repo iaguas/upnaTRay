@@ -1,3 +1,9 @@
+/*
+ * Proyecto upnaTRay
+ * Computacion Grafica - Master Universitario en Ingenieria Informatica
+ * Curso 2015-2016 - Universidad Publica de Navarra
+ * Iñigo Aguas Ardaiz
+ */
 package parser;
 
 import java.awt.Color;
@@ -17,23 +23,27 @@ import primitives.Sphere;
 import primitives.Triangle;
 import primitives.Vector3D;
 
+/**
+ * Clase para incluir los objectos de las escenas desde un fichero.
+ * @author mikel.aldaz
+ */
 public class Parser {
 
   // ATRIBUTOS
-  BufferedReader in;
+  private final BufferedReader in;
 
   // METODOS
   /**
-   * 
-   * @param in 
+   * Método constructor del parser a partir del archivo de entrada.
+   * @param in Fichero in de descripción la escena según la gramática dada.
    */
   public Parser (final BufferedReader in) {
     this.in = in;
   }
 
   /**
-   * 
-   * @return
+   * Método para parsear el color de fondo de la imagen.
+   * @return El color en el espacio de color sRGB según la clase Color.
    * @throws Exception 
    */
   public Color parseBackgroundColor () throws Exception {
@@ -61,7 +71,8 @@ public class Parser {
   /**
    * Lee la posicion de la camara, su vector de direccion y vertical auxiliar y
    * devuelve un objeto de camara.
-   *
+   * @return El objeto camera inicializado adecuadamente.
+   * @throws java.lang.Exception
    */
   public Camera parseCamera() throws Exception {
 
@@ -106,9 +117,10 @@ public class Parser {
   }
 
   /**
-   * Lee el tipo de proyecci�n, y en funci�n del tipo, las caracter�sticas de la
+   * Lee el tipo de proyección, y en función del tipo, las características de la
    * misma, devolviendo un objeto de tipo Projection
-   *
+   * @return El objeto projection inicializado adecuadamente.
+   * @throws java.lang.Exception
    */
   public Projection parseProjection() throws Exception {
 
@@ -200,8 +212,9 @@ public class Parser {
 
   /**
    * Lee un grupo de objetos cuyo número está indicado en la primera línea.
-   *
    * TODO Comprobar si hay tantos objetos como se indica.
+   * @return El objeto group inicializado adecuadamente.
+   * @throws java.lang.Exception
    */
   public Group parseGroup() throws Exception {
 
@@ -223,7 +236,8 @@ public class Parser {
   }
 
   /**
-   * Devuelve una esfera que tiene centro, radio y color definidos.
+   * Devuelve un objeto (Sphere, Triangle o Group) con sus parámetros inicializados.
+   * @return El objecto Sphere inicializado adecuadamente.
    * @throws java.lang.Exception
    */
   public Object3D parseElement() throws Exception {

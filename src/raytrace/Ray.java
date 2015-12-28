@@ -10,32 +10,55 @@ import primitives.Point3D;
 import primitives.Vector3D;
 
 /**
- *
+ * Clase que implementa la representación del rayo.
  * @author inigo.aguas
  */
 public class Ray {
     
-    Point3D point;
-    Vector3D vector;
+    private final Point3D point;
+    private final Vector3D vector;
     
-    public Ray (final Point3D R, final Point3D Q){
-        this.point = R;
-        this.vector = (Q.substract(R)).normalize();
+    /**
+     * Método constructor del rayo a partir de dos puntos.
+     * @param P Punto P del rayo. 
+     * @param Q Punto Q del rayo.
+     */
+    public Ray (final Point3D P, final Point3D Q){
+        this.point = P;
+        this.vector = (Q.substract(P)).normalize();
     }
     
-    public Ray (final Point3D R, final Vector3D v){
-        this.point = R;
+    /**
+     * Método constructor del rayo a partir de un punto y un vector.
+     * @param P Punto P del rayo. 
+     * @param v Vector v en la dirección del rayo.
+     */
+    public Ray (final Point3D P, final Vector3D v){
+        this.point = P;
         this.vector = v.normalize();
     }
     
+    /**
+     * Método para disponer de un punto a una distancia dada en la dirección del rayo.
+     * @param t Distancia t.
+     * @return Devuelve un punto a distancia t en la dirección del rayo.
+     */
     public Point3D pointAtParameter (final float t){
         return new Point3D(point.x+t*vector.x, point.y+t*vector.y, point.z+t*vector.z);
     }
     
+    /**
+     * Método de acceso al punto de origen del rayo.
+     * @return Punto de origen del rayo.
+     */
     public Point3D getOrigin (){
         return new Point3D(point);
     }
 
+    /**
+     * Método de acceso al vector de dirección del rayo.
+     * @return Vector de dirección del rayo.
+     */
     public Vector3D getDirection() {
         return new Vector3D(vector);
     }

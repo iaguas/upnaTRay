@@ -9,7 +9,7 @@ package projection;
 import raytrace.RayGenerator;
 
 /**
- *
+ * Clase abstracta para manejar las projecciones de las que heredan las demás.
  * @author inigo.aguas
  */
 public abstract class Projection {
@@ -37,11 +37,11 @@ public abstract class Projection {
     }
     
     /**
-     * 
-     * @param cam Cámara asociada al método.
+     * Método con el se crea el generador de rayos del trazador.
+     * @param cam Cámara asociada al trazador.
      * @param w Anchura de la ventana de proyección.
      * @param h Altura de la ventana de proyección.
-     * @return 
+     * @return Un generador de rayos adecuado a la lente de la cámara y los parámetros del trazador.
      */
     abstract RayGenerator getRayGenerator (final Camera cam, final int w, final int h);
     
