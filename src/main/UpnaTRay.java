@@ -39,7 +39,7 @@ public class UpnaTRay {
     /**
      * Método principal del trazador que inicia la ejecución del mismo.
      * @param args the command line arguments
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception Excepción lanzada.
      */
     public static void main(String[] args) throws Exception{
         //Image img = basicOrtographicSphereImage();

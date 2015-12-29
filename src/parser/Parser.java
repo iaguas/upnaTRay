@@ -44,7 +44,7 @@ public class Parser {
   /**
    * Método para parsear el color de fondo de la imagen.
    * @return El color en el espacio de color sRGB según la clase Color.
-   * @throws Exception 
+   * @throws java.lang.Exception Excepción lanzada.
    */
   public Color parseBackgroundColor () throws Exception {
 
@@ -72,7 +72,7 @@ public class Parser {
    * Lee la posicion de la camara, su vector de direccion y vertical auxiliar y
    * devuelve un objeto de camara.
    * @return El objeto camera inicializado adecuadamente.
-   * @throws java.lang.Exception
+   * @throws java.lang.Exception Excepción lanzada.
    */
   public Camera parseCamera() throws Exception {
 
@@ -120,7 +120,7 @@ public class Parser {
    * Lee el tipo de proyección, y en función del tipo, las características de la
    * misma, devolviendo un objeto de tipo Projection
    * @return El objeto projection inicializado adecuadamente.
-   * @throws java.lang.Exception
+   * @throws java.lang.Exception Excepción lanzada.
    */
   public Projection parseProjection() throws Exception {
 
@@ -214,7 +214,7 @@ public class Parser {
    * Lee un grupo de objetos cuyo número está indicado en la primera línea.
    * TODO Comprobar si hay tantos objetos como se indica.
    * @return El objeto group inicializado adecuadamente.
-   * @throws java.lang.Exception
+   * @throws java.lang.Exception Excepción lanzada.
    */
   public Group parseGroup() throws Exception {
 
@@ -238,7 +238,7 @@ public class Parser {
   /**
    * Devuelve un objeto (Sphere, Triangle o Group) con sus parámetros inicializados.
    * @return El objecto Sphere inicializado adecuadamente.
-   * @throws java.lang.Exception
+   * @throws java.lang.Exception Excepción lanzada.
    */
   public Object3D parseElement() throws Exception {
     

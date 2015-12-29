@@ -47,7 +47,7 @@ public class Vector3D extends Tuple4f {
 
     /**
      * Método constructor de un vector a partir de otro.
-     * @param vector 
+     * @param vector Vector original.
      */
     public Vector3D(Vector3D vector) {
         super(vector);
