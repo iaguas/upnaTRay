@@ -59,8 +59,9 @@ public class Vector3D extends Tuple4f {
      */
     public Vector3D normalize() {
         float module = (float) Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
-        return new Vector3D(this.x/module, this.y/module, this.z/module);
-    }   
+        float invmodule = 1.0f / ((module == 0.0f) ? 1 : module); // Para controlar la división por 0;
+        return new Vector3D(this.x * invmodule, this.y * invmodule, this.z * invmodule);
+    }    
 
     /**
      * Implementación del producto vectorial entre dos vectores (producto cruz).
