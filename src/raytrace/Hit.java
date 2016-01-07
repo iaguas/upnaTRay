@@ -9,6 +9,7 @@ package raytrace;
 import java.awt.Color;
 import primitives.Point3D;
 import primitives.Vector3D;
+import primitives.propieties.Material;
 
 /**
  * Clase con la que se representa el impacto de un rayo en un objeto.
@@ -71,5 +72,9 @@ public class Hit {
      */
     public float getT() {
         return t;
+    }
+
+    public Material getMaterial() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
