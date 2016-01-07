@@ -9,19 +9,19 @@ package parser;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.util.StringTokenizer;
-
-import projection.Projection;
-import projection.Ortographic;
-import projection.Perspective;
-import projection.SemisphericalFisheye;
-import projection.AngularFisheye;
-import projection.Camera;
 import primitives.Group;
 import primitives.Object3D;
+import primitives.Plane;
 import primitives.Point3D;
 import primitives.Sphere;
 import primitives.Triangle;
 import primitives.Vector3D;
+import projection.AngularFisheye;
+import projection.Camera;
+import projection.Ortographic;
+import projection.Perspective;
+import projection.Projection;
+import projection.SemisphericalFisheye;
 
 /**
  * Clase para incluir los objectos de las escenas desde un fichero.
@@ -329,6 +329,40 @@ public class Parser {
         line = in.readLine();
         
         return new Triangle(color, A, B, C);
+      }
+      case "Plane":
+      {
+        // Leer punto
+        line = in.readLine();
+        s = new StringTokenizer(line);        
+        s.nextToken();
+        float x = Float.parseFloat(s.nextToken());
+        float y = Float.parseFloat(s.nextToken());
+        float z = Float.parseFloat(s.nextToken());
+        Point3D point = new Point3D(x, y, z);
+          
+        // Leer vector normal
+        line = in.readLine();
+        s = new StringTokenizer(line);        
+        s.nextToken();
+        x = Float.parseFloat(s.nextToken());
+        y = Float.parseFloat(s.nextToken());
+        z = Float.parseFloat(s.nextToken());
+        Vector3D normal = new Vector3D(x, y, z);
+        
+        // Leer color
+        line = in.readLine();
+        s = new StringTokenizer(line);
+        s.nextToken();
+        final int cx = Integer.parseInt(s.nextToken());
+        final int cy = Integer.parseInt(s.nextToken());
+        final int cz = Integer.parseInt(s.nextToken());
+        Color color = new Color(cx, cy, cz);
+        
+        // Finalizar lectura
+        line = in.readLine();
+        
+        return new Plane(color, point, normal);
       }
       case "Group":
       {

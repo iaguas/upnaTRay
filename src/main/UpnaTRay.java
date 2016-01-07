@@ -10,31 +10,59 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import parser.Parser;
 import primitives.Group;
-import primitives.Plane;
-import primitives.Point3D;
-import primitives.Sphere;
-import primitives.Triangle;
-import primitives.Vector3D;
 import projection.Camera;
-import projection.Ortographic;
 import projection.Projection;
-import projection.Perspective;
 
 /**
  * Clase principal del proyecto que genera en una ventana la imagen propuesta.
  * Se le pasa la misma en un archivo y se recoge en un cuadro de texto. // TODO
  * @author inigo.aguas
  */
-public class UpnaTRay {
+public class UpnaTRay extends JFrame{
+
+    private final static int W=600, H=600; // Tamaño de la ventana
+    private static Image img;
+    private final String pwd = System.getProperty("user.dir");
+    private static Container pane;
+    private static UpnaTRay canvas;
+    
+    public UpnaTRay() throws Exception{
+        JMenuItem openOption, saveOption, closeOption; 
+        
+        JMenuBar menubar = new JMenuBar();
+        JMenu menu = new JMenu("Opciones");
+        menu.add(openOption = new JMenuItem("Abrir escena"));
+        menu.add(saveOption = new JMenuItem("Guardar escena"));
+        menu.addSeparator();
+        menu.add(closeOption = new JMenuItem( "Salir"));
+        menubar.add(menu);
+        setJMenuBar(menubar);
+        
+        openOption.addActionListener(new MenuListener());
+        saveOption.addActionListener(new MenuListener());
+        closeOption.addActionListener(new MenuListener());
+    }
 
     /**
      * Método principal del trazador que inicia la ejecución del mismo.
@@ -42,19 +70,48 @@ public class UpnaTRay {
      * @throws java.lang.Exception Excepción lanzada.
      */
     public static void main(String[] args) throws Exception{
-        //Image img = basicOrtographicSphereImage();
-        //Image img = basicPerspectiveSphereImage();
-        //Image img = basicPerspectivePlaneImage();
-        //Image img = basicOrtographicTriangleImage();
-        Image img = generateImage("scenes" + File.separator + "scene0");
-        JFrame canvas = new JFrame();
-        canvas.setSize(img.getWidth()+16,img.getHeight()+38);
+        canvas = new UpnaTRay();
+        canvas.setSize(W+16, H+59);
         canvas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         canvas.setTitle("upnaTRay - imagen renderizada");
-        Container pane = canvas.getContentPane();
-        pane.add(new ColorPanel(img));
-        canvas.setVisible(true);  
+        pane = canvas.getContentPane();
+        canvas.setVisible(true);
     }
+    
+    private File openFile() {
+        File openFile = null;
+        try {
+            JFileChooser fileChooser = new JFileChooser(pwd + File.separator + "scenes");
+            fileChooser.showOpenDialog(this);
+            openFile = fileChooser.getSelectedFile();
+        }
+        catch(HeadlessException ex) {
+            JOptionPane.showMessageDialog(null,ex+"" + "\nNo se ha encontrado el archivo",
+                 "Advertencia",JOptionPane.WARNING_MESSAGE);
+        }
+        return openFile;
+    } 
+
+    private File saveFile() {
+        File saveFile = null;
+        try {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.showSaveDialog(this);
+            saveFile = fileChooser.getSelectedFile();
+            String filePath = saveFile.getPath();
+            if(!filePath.toLowerCase().endsWith(".png"))
+            {
+                saveFile = new File(filePath + ".png");
+            }
+            
+            
+        }
+        catch(HeadlessException ex) {
+            JOptionPane.showMessageDialog(null,"Su archivo no se ha podido guardar",
+                 "Advertencia",JOptionPane.WARNING_MESSAGE);
+        }
+        return saveFile;
+    } 
     
     /**
      * Generador de una imagen para mostrar a partir de un archivo dado.
@@ -69,92 +126,78 @@ public class UpnaTRay {
         cam.setProjection(proj);
         Color bcolor = parser.parseBackgroundColor();
         Group scene = parser.parseGroup();
-        Image img = new Image(800, 800, bcolor);
-        img.synthesis(scene, cam);
-        return img;
+        Image image = new Image(img.getWidth(), img.getHeight(), bcolor);
+        image.synthesis(scene, cam);
+        return image;
+    }
+
+    private static Image generateImage(File file) throws Exception{
+        Parser parser = new Parser(new BufferedReader(new FileReader(file)));
+        Camera cam = parser.parseCamera();
+        Projection proj = parser.parseProjection();
+        cam.setProjection(proj);
+        Color bcolor = parser.parseBackgroundColor();
+        Group scene = parser.parseGroup();
+        Image image = new Image(W, H, bcolor);
+        image.synthesis(scene, cam);
+        return image;
     }
     
-    /**
-     * Generador de una imagen para probar la projección ortográfica con esferas.
-     * @return Un objeto imagen img que contiene la imagen generada.
-     */
-    private static Image basicOrtographicSphereImage(){
-        Image img = new Image(200, 200, Color.WHITE);
-        Camera cam = new Camera(new Point3D(200,0,0), new Vector3D(-1,0,0), new Vector3D(0,1,0));
-        Ortographic ort = new Ortographic(150, 150);
-        //Perspective ort = new Perspective(50, 45, 1f);
-        cam.setProjection(ort);
-        Group scene = new Group();
-        scene.addObject(0, new Sphere(Color.BLUE, new Point3D(0,0,0), 20));
-        scene.addObject(0,new Sphere(Color.ORANGE, new Point3D(0,30,0), 30));
-        img.synthesis(scene, cam);
-        return img;
+    class MenuListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String actionCommand = e.getActionCommand();
+            if(e.getSource() instanceof JMenuItem){
+                switch (actionCommand) {
+                    case "Abrir escena":
+                        File ofile = openFile();
+                        try {
+                            img = generateImage(ofile);
+                        } 
+                        catch (Exception ex) {
+                            Logger.getLogger(UpnaTRay.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        pane.removeAll();
+                        pane.add(new ImagePanel(img));
+                        canvas.setVisible(true);
+                        break;
+                    case "Guardar escena":
+                        if(img!=null){
+                            File sf = saveFile();
+                            try {
+                                ImageIO.write(img.getBufferedImage(), "png", sf);
+                            } 
+                            catch (IOException ex) {
+                                JOptionPane.showMessageDialog(null,"Su archivo no se ha podido guardar",
+                                    "Advertencia",JOptionPane.WARNING_MESSAGE);                        
+                            }
+                        }
+                        else
+                            JOptionPane.showMessageDialog(null,"Se debe cargar una escena para poder guardarla",
+                                    "Advertencia",JOptionPane.WARNING_MESSAGE);
+                        break;
+                    case "Salir":
+                        System.exit(0);
+                        break;
+                }
+            }
+        }
     }
-    
-    /**
-     * Generador de una imagen para probar la projección en perspectiva con esferas.
-     * @return Un objeto imagen img que contiene la imagen generada.
-     */
-    private static Image basicPerspectiveSphereImage(){
-        Image img = new Image(200, 200, Color.WHITE);
-        Camera cam = new Camera(new Point3D(200,0,0), new Vector3D(-1,0,0), new Vector3D(0,1,0));
-        Perspective ort = new Perspective(50, 45, 1f);
-        cam.setProjection(ort);
-        Group scene = new Group();
-        scene.addObject(0, new Sphere(Color.BLUE, new Point3D(0,0,0), 20));
-        scene.addObject(0,new Sphere(Color.ORANGE, new Point3D(0,30,0), 30));
-        img.synthesis(scene, cam);
-        return img;
-    }
-    
-    /**
-     * Generador de una imagen para probar la projección ortográfica con triángulos.
-     * @return Un objeto imagen img que contiene la imagen generada.
-     */
-    private static Image basicOrtographicTriangleImage(){
-        Image img = new Image(200, 200, Color.WHITE);
-        Camera cam = new Camera(new Point3D(200,0,0), new Vector3D(-1,0,0), new Vector3D(0.0f,1.0f,0.0f));
-        Ortographic ort = new Ortographic(150, 150);
-        //Perspective ort = new Perspective(50, 45, 1f);
-        cam.setProjection(ort);
-        Group scene = new Group();
-        scene.addObject(0, new Triangle(Color.BLUE, new Point3D(50,50,0),  new Point3D(0,0,0),new Point3D(100,0,0)));
-        img.synthesis(scene, cam);
-        return img;
-    }
-    
-    /**
-     * Generador de una imagen para probar la projección en perspectiva con planos.
-     * @return Un objeto imagen img que contiene la imagen generada.
-     */
-    private static Image basicPerspectivePlaneImage(){
-        Image img = new Image(500, 500, Color.WHITE);
-        Camera cam = new Camera(new Point3D(100,20,100), new Vector3D(-1,0,-1), new Vector3D(0.0f,1.0f,0.0f));
-        //Ortographic ort = new Ortographic(50, 50);
-        Perspective ort = new Perspective(10, 90, 1f);
-        cam.setProjection(ort);
-        Group scene = new Group();
-        scene.addObject(0, new Plane(Color.GREEN, new Point3D(0,0,0), new Vector3D(1,0,0)));
-        scene.addObject(1, new Plane(Color.RED, new Point3D(0,0,0), new Vector3D(0,1,0)));
-        scene.addObject(2, new Plane(Color.BLUE, new Point3D(0,0,0), new Vector3D(0,0,1)));
-        img.synthesis(scene, cam);
-        return img;
-    }    
 }
 
 /**
  * Clase para implementar la ventana en la que mostrar la imagen.
  * @author inigo.aguas
  */
-class ColorPanel extends JPanel{
+class ImagePanel extends JPanel{
 	
-    private BufferedImage img; // Argumento en el que se incluye la definición de la imagen.
+    private final BufferedImage img; // Argumento en el que se incluye la definición de la imagen.
         
     /**
      * Método constructor de la clase dada una imagen.
      * @param img Imagen img dada para mostrar en la ventana.
      */
-    public ColorPanel(Image img){
+    public ImagePanel(Image img){
         this.img = img.getBufferedImage();
     }
 

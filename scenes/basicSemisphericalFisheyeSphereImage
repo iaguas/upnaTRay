@@ -1,0 +1,24 @@
+Camera {
+	position 200.0 0.0 0.0
+	focus -1.0 0.0 0.0
+	up 0.0 1.0 0.0
+}
+SemisphericalFisheye {
+	distance 5.0
+}
+Background {
+	color 255 255 255
+}
+Group {
+	numObjects 2
+	Sphere {
+		center 0.0 0.0 0.0
+		radius 20.0
+		color 200 125 200
+	}
+	Sphere {
+		center 0.0 30.0 0.0
+		radius 30.0
+		color 255 0 0
+	}
+}
