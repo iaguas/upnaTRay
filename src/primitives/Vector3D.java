@@ -42,7 +42,7 @@ public class Vector3D extends Tuple4f {
      * @param b Punto b.
      */
     public Vector3D(final Point3D a, final Point3D b){
-        super(b.x-a.x, b.y-a.y, b.z-a.z, 0);
+        super(b.getX()-a.getX(), b.getY()-a.getY(), b.getZ()-a.getZ(), 0);
     }
 
     /**
@@ -54,13 +54,21 @@ public class Vector3D extends Tuple4f {
     }
 
     /**
+     * Módulo del vector 
+     * @return módulo del vector
+     */
+    public float module() {
+        return (float) Math.sqrt(getX()*getX() + getY()*getY() + getZ()*getZ());
+    }
+    
+    /**
      * Normalización de un vector dado.
      * @return Vector normalizado.
      */
     public Vector3D normalize() {
-        float module = (float) Math.sqrt(this.x*this.x + this.y*this.y + this.z*this.z);
-        float invmodule = 1.0f / ((module == 0.0f) ? 1 : module); // Para controlar la división por 0;
-        return new Vector3D(this.x * invmodule, this.y * invmodule, this.z * invmodule);
+        final float module = this.module();
+        final float invmodule = 1.0f / ((module == 0.0f) ? 1 : module); // Para controlar la división por 0;
+        return this.multiply(invmodule);
     }    
 
     /**
@@ -70,9 +78,9 @@ public class Vector3D extends Tuple4f {
      */
     public Vector3D vecprod(Vector3D vector) {
         return new Vector3D(
-            this.y*vector.z - this.z*vector.y,  // Coordenada x
-            this.z*vector.x - this.x*vector.z,  // Coordenada y
-            this.x*vector.y - this.y*vector.x); // Coordinada z
+            getY() * vector.getZ() - getZ() * vector.getY(),  // Coordenada x
+            getZ() * vector.getX() - getX() * vector.getZ(),  // Coordenada y
+            getX() * vector.getY() - getY() * vector.getX()); // Coordinada z
     }
     
     /**
@@ -81,15 +89,17 @@ public class Vector3D extends Tuple4f {
      * @return Escalar resultado del producto.
      */
     public float escprod(Vector3D vector) {
-        return this.x*vector.x + this.y*vector.y + this.z*vector.z; // Se evita w por ser 0 siempre.
+        return getX() * vector.getX() + 
+               getY() * vector.getY() + 
+               getZ() * vector.getZ(); // Se evita w por ser 0 siempre.
     }
 
     /**
      * Método para hacer que todas las coordenadas del vector sean multiplicadas por -1.
      * @return Vector con todas sus coordenadas multiplicadas por -1.
      */
-    public Vector3D oposite(){
-        return new Vector3D(-this.x, -this.y, -this.z);
+    public Vector3D oposite() {
+        return new Vector3D(-getX(), -getY(), -getZ());
     }
     
     /**
@@ -97,15 +107,33 @@ public class Vector3D extends Tuple4f {
      * @param P Punto P que sumar.
      * @return Punto resultado de la suma de un punto y un vector.
      */
-    public Point3D sumPoint(Point3D P){
-        return new Point3D(this.x+P.x, this.y+P.y, this.z+P.z);
+    public Point3D sumPoint(Point3D P) {
+        return new Point3D(getX()+P.getX(), getY()+P.getY(), getZ()+P.getZ());
     }
-
+    
+    /** 
+     * Implementación de la suma de vectores
+     * @param v Vector a sumar.
+     * @return La suma de los vectores argumento.
+     */
+    public Vector3D plus(Vector3D v) {
+        return new Vector3D(this.getX()+v.getX(), this.getY()+v.getY(), this.getZ()+v.getZ());
+    }
+    
+    /**
+     * Implementación de un vector por un escalar
+     * @param f Escalar
+     * @return Vector v multiplicado por el escalar f.
+     */
+    public Vector3D multiply(float f) {
+        return new Vector3D(getX()*f, getY()*f, getZ()*f);
+    }
+    
     /**
      * Método para devolver el vector según la clase forma Vector3f.
      * @return Objeto de la clase Vector3f resultado.
      */
     Vector3f getVector3f() {
-        return new Vector3f(this.x, this.y, this.z);
+        return new Vector3f(getX(), getY(), getZ());
     }
 }

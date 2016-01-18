@@ -32,14 +32,14 @@ public class Point3D extends Tuple4f{
      * @param w Coordenada homogénea.
      */
     public Point3D (final float x, final float y, final float z, final float w){
-        super(x, y, z, 1);       
+        super(x, y, z, w);       
     }
     
     /** 
      * Método constructor de un punto a partir de otro.
      * @param P Punto P en coordenadas homogéneas.
      */
-    public Point3D(Point3D P) {
+    public Point3D(final Point3D P) {
         super(P);
     }
 
@@ -48,7 +48,29 @@ public class Point3D extends Tuple4f{
      * @param R Punto R para rectar.
      * @return Vector resta de los dos puntos implicados.
      */
-    public Vector3D substract(Point3D R) {
-        return new Vector3D(this.x-R.x, this.y-R.y, this.z-R.z);
+    public Vector3D substract(final Point3D R) {
+        return new Vector3D(this.getX()-R.getX(), this.getY()-R.getY(), this.getZ()-R.getZ());
+    }
+    
+    /**
+     * Cálculo de la distancia entre dos puntos
+     * @param P Punto sobre el que calcular la distancia.
+     * @return La distancia entre el punto P y el punto que llama.
+     */
+    public float distance(final Point3D P){
+        final double xsquare = (this.getX() - P.getX()) * (this.getX() - P.getX());
+        final double ysquare = (this.getY() - P.getY()) * (this.getY() - P.getY());
+        final double zsquare = (this.getZ() - P.getZ()) * (this.getZ() - P.getZ());
+        return (float) Math.sqrt(xsquare + ysquare + zsquare);
+    }
+    
+    /**
+     * Reescritura del método equals para los puntos
+     * @param P Punto a comparar.
+     * @return Si los puntos son iguales o no.
+     */
+    public boolean equals(final Point3D P){
+        return this.getW() == P.getW() && this.getX() == P.getX() && 
+                this.getY() == P.getY() && this.getZ() == P.getZ();
     }
 }
