@@ -25,17 +25,6 @@ public class Vector3D extends Tuple4f {
         super(x, y, z, 0);
     }
     
-    /** 
-     * Método constructor de un vector dadas sus coordenadas NO homogéneas.
-     * @param x Coordenada x.
-     * @param y Coordenada y.
-     * @param z Coordenada z.
-     * @param w Coordenada homogénea.
-     */
-    public Vector3D(float x, float y, float z, float w){
-        super(x, y, z, w);
-    }
-    
     /**
      * Método constructor de un vector dados dos puntos entre los que se haya.
      * @param a Punto a.

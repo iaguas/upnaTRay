@@ -18,11 +18,23 @@ public abstract class Projection {
     // * Anchura w de la ventana de proyeccion
     // * Altura h de la ventana de proyeccion
     
-    protected float distance;
-    protected float w;
-    protected float h;
+    /**
+     * Distancia d del plano de proyeccion a la camara
+     */
+    private float distance;
+    /**
+     * Anchura w de la ventana de proyeccion
+     */
+    private float w;
+    /**
+     * Altura h de la ventana de proyeccion
+     */
+    private float h;
     
-    public Projection (){}
+    /**
+     * Constructor sin argumentos de la clase Projection.
+     */
+    public Projection () {}
     
     /**
      * Constructor de la proyección
@@ -46,11 +58,51 @@ public abstract class Projection {
     abstract RayGenerator getRayGenerator (final Camera cam, final int w, final int h);
     
     /**
-     * Conocer la distancia a la que se produce la intersección del rayo.
-     * @return Un float con la distancia.
+     * Método de acceso a la distancia a la que se produce la intersección del rayo.
+     * @return La distancia a la que se produce la intersección.
      */
-    public float getDistance(){
+    public float getDistance() {
         return distance;
+    }
+    
+    /**
+     * Método de acceso a la anchura de la ventana de proyección.
+     * @return Anchura de la ventana de proyección.
+     */
+    public float getW() {
+        return w;
+    }
+    
+    /**
+     * Método de acceso a la altura de la ventana de proyección.
+     * @return Altura de la ventana de proyección.
+     */
+    public float getH() {
+        return h;
+    }
+
+    /**
+     * Método de definición de la distancia a la que se produce la intersección del rayo.
+     * @param distance La distancia a la que se produce la intersección.
+     */
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
+
+    /**
+     * Método de definición de la anchura de la ventana de proyección.
+     * @param w Anchura de la ventana de proyección.
+     */
+    public void setW(float w) {
+        this.w = w;
+    }
+
+    /** 
+     * Método de definición de la altura de la ventana de proyección.
+     * @param h Altura de la ventana de proyección.
+     */
+    public void setH(float h) {
+        this.h = h;
     }
     
 }

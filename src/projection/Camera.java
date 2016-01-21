@@ -42,9 +42,9 @@ public class Camera {
         this.ybase = zbase.vecprod(xbase); // normalizar es innecesario si los otros lo están
         
         // Parámetros para la matriz de transformación
-        Vector3D oplook = look.oposite().normalize();
-        float s = up.escprod(oplook);
-        double t = Math.pow(1-s*s, -0.5f);
+        final Vector3D oplook = look.oposite().normalize();
+        final float s = up.escprod(oplook);
+        final double t = Math.pow(1-s*s, -0.5f);
         
         // Creación de la matriz de transformación
         transformMatrix = new Matrix4f();
@@ -82,10 +82,10 @@ public class Camera {
         //transformMatrix.transform(R);
         
         return new Point3D(
-            transformMatrix.m00*P.x + transformMatrix.m01*P.y + transformMatrix.m02*P.z + transformMatrix.m03*P.w,
-            transformMatrix.m10*P.x + transformMatrix.m11*P.y + transformMatrix.m12*P.z + transformMatrix.m13*P.w,
-            transformMatrix.m20*P.x + transformMatrix.m21*P.y + transformMatrix.m22*P.z + transformMatrix.m23*P.w,
-            transformMatrix.m30*P.x + transformMatrix.m31*P.y + transformMatrix.m32*P.z + transformMatrix.m33*P.w
+            transformMatrix.getElement(0,0)*P.getX() + transformMatrix.getElement(0,1)*P.getY() + transformMatrix.getElement(0,2)*P.getZ() + transformMatrix.getElement(0,3)*P.getW(),
+            transformMatrix.getElement(1,0)*P.getX() + transformMatrix.getElement(1,1)*P.getY() + transformMatrix.getElement(1,2)*P.getZ() + transformMatrix.getElement(1,3)*P.getW(),
+            transformMatrix.getElement(2,0)*P.getX() + transformMatrix.getElement(2,1)*P.getY() + transformMatrix.getElement(2,2)*P.getZ() + transformMatrix.getElement(2,3)*P.getW(),
+            transformMatrix.getElement(3,0)*P.getX() + transformMatrix.getElement(3,1)*P.getY() + transformMatrix.getElement(3,2)*P.getZ() + transformMatrix.getElement(3,3)*P.getW()
         );
     }
     

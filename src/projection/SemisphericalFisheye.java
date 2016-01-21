@@ -16,11 +16,12 @@ import raytrace.RayGenerator;
  */
 public class SemisphericalFisheye extends Projection{
     
+    /**
+     * Método constructor de la proyección ojo de pez semiesférica.
+     * @param radius Radio de la circunferencia en la que se inscribe la proyección.
+     */
     public SemisphericalFisheye(float radius) {
-        this.distance = radius; // La distancia es el radio de la proyección. 
-        // TODO: Debería ser siempre int para que la w y h tengan sentido.
-        this.w = 2 * radius;
-        this.h = 2 * radius;
+        super(radius, 2*radius, 2*radius);
     }
 
     @Override
@@ -42,10 +43,11 @@ public class SemisphericalFisheye extends Projection{
         public Ray getRay(int m, int n) {
             // Paso 1. Crear un punto proyectado ortográficamente en el plano Z=0 (en -k).
             final float k = cam.getProjection().getDistance();
-            final float x = (m + 0.5f) * cam.getProjection().w/W - cam.getProjection().w*0.5f;
-            final float y = (n + 0.5f) * cam.getProjection().h/H - cam.getProjection().h*0.5f;
+            final float x = (m + 0.5f) * cam.getProjection().getW()/W - cam.getProjection().getW() * 0.5f;
+            final float y = (n + 0.5f) * cam.getProjection().getH()/H - cam.getProjection().getH() * 0.5f;
             final float z = -k;
             
+            // Paso 2. Disponer el punto en el circulo en el que se incribe.
             final float hsquare = x*x + y*y;
             final float ksquare = k*k;
             Point3D Pstar = new Point3D(x, y, z);

@@ -16,8 +16,9 @@ import raytrace.RayGenerator;
  */
 public class Perspective extends Projection {
 
-    private final float angle;
-    private final float aspect;
+    // Como solo se utilizan en el constructor, no nos preocupamos de guardarlos para nada.
+    //private final float angle;
+    //private final float aspect;
     
     /**
      * Constructor de la proyección en perspectiva
@@ -27,12 +28,11 @@ public class Perspective extends Projection {
      */
     public Perspective(final float distance, final float angle, final float aspect) {
         // No utilizamos el constructor super para calcular h y w pq tendría que ser lo primero.
-        this.distance = distance;
-        this.angle = (float) Math.toRadians(angle);
-        this.aspect = aspect;
+        this.setDistance(distance);
+        final float a = (float) Math.toRadians(angle);
         // Calculamos también las dimensiones.
-        this.h = 2 * distance * (float) Math.tan(this.angle*0.5f);
-        this.w = aspect * h;
+        this.setH(2 * distance * (float) Math.tan(a*0.5f));
+        this.setW(aspect * this.getH());
     }
     
     @Override
@@ -52,9 +52,9 @@ public class Perspective extends Projection {
         
         @Override
         public Ray getRay(int m, int n) {
-            final float x = (m + 0.5f) * cam.getProjection().w/W - cam.getProjection().w*0.5f;
-            final float y = (n + 0.5f) * cam.getProjection().h/H - cam.getProjection().h*0.5f;
-            final float z = -cam.getProjection().distance;
+            final float x = (m + 0.5f) * cam.getProjection().getW()/W - cam.getProjection().getW() * 0.5f;
+            final float y = (n + 0.5f) * cam.getProjection().getH()/H - cam.getProjection().getH() * 0.5f;
+            final float z = -cam.getProjection().getDistance();
             final Point3D R = cam.toSceneCoord(new Point3D(x, y, z));
             return new Ray(cam.getPoint(), R);
         }

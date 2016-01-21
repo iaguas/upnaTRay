@@ -44,7 +44,9 @@ public class Ray {
      * @return Devuelve un punto a distancia t en la dirección del rayo.
      */
     public Point3D pointAtParameter (final float t){
-        return new Point3D(point.x+t*vector.x, point.y+t*vector.y, point.z+t*vector.z);
+        return new Point3D(point.getX() + t*vector.getX(), 
+                           point.getY() + t*vector.getY(), 
+                           point.getZ() + t*vector.getZ());
     }
     
     /**
