@@ -37,27 +37,27 @@ public class Sphere extends Object3D {
         float t = 0;
         
         Vector3D v = new Vector3D(r.getOrigin(), center);
-        float c = v.dotProd(v) - radius*radius; 
+        final float c = v.dotProd(v) - radius*radius; 
         if (c > 0) { // Punto origen del rayo fuera de la esfera.
-            float b = v.dotProd(r.getDirection());
+            final float b = v.dotProd(r.getDirection());
             
             if (b >= 0) { // El centro de la esfera en el semiespacio posterior.
                 if (c == b*b) {
                     t = b;
                 }
                 else if (c < b*b){
-                    float d = (float) Math.sqrt(b * b - c);
-                    float tp = b + d;
-                    float tm = c / tp;
+                    final float d = (float) Math.sqrt(b * b - c);
+                    final float tp = b + d;
+                    final float tm = c / tp;
                     t = Math.min(tm, tp);
                 }
             }
         }
                
         if(t > tmin){
-            Point3D intersection = r.pointAtParameter(t);
-            Vector3D normal = new Vector3D(center, intersection).normalize();
-            return new Hit(t, intersection, normal, this.color);
+            final Point3D intersection = r.pointAtParameter(t);
+            final Vector3D normal = new Vector3D(center, intersection).normalize();
+            return new Hit(t, intersection, normal, mat);
         }
         
         return Hit.VoidHit;
