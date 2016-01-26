@@ -37,18 +37,18 @@ public class Triangle extends Object3D {
         this.c = c;
         Vector3D AB = new Vector3D(a, b);
         Vector3D AC = new Vector3D(c, a);
-        this.normal = (AB.vecprod(AC)).normalize();
+        this.normal = (AB.crossProd(AC)).normalize();
     }
 
     @Override
     public Hit intersect(Ray r, float tmin){
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
-        Vector3D norm = (new Vector3D(this.a, this.b)).vecprod(new Vector3D(this.a, this.c));
-        float cc = norm.escprod(r.getDirection());
+        Vector3D norm = (new Vector3D(this.a, this.b)).crossProd(new Vector3D(this.a, this.c));
+        float cc = norm.dotProd(r.getDirection());
         
         if (cc < 0){ // Intersección por la cara exterior.
-            float bb = norm.escprod(new Vector3D(a, r.getOrigin()));
+            float bb = norm.dotProd(new Vector3D(a, r.getOrigin()));
             if (bb >= 0) { // Intersección en el semiespacio posterior.
                 final float alpha = -bb / cc;
                 //float[] result = new float[2];
@@ -62,9 +62,9 @@ public class Triangle extends Object3D {
                 Vector3D AB = new Vector3D(this.a, this.b);
                 Vector3D AC = new Vector3D(this.a, this.c);
                 Vector3D AR = new Vector3D(this.a, r.getOrigin());
-                final float denom = 1 / r.getDirection().escprod(AC.vecprod(AB));
-                final float beta = -denom * AC.escprod(r.getDirection().vecprod(AR));
-                final float gamma = denom * AB.escprod(r.getDirection().vecprod(AR)); 
+                final float denom = 1 / r.getDirection().dotProd(AC.crossProd(AB));
+                final float beta = -denom * AC.dotProd(r.getDirection().crossProd(AR));
+                final float gamma = denom * AB.dotProd(r.getDirection().crossProd(AR)); 
                 
                 if ((beta >= 0) && (beta <= 1)){
                     if ((gamma >= 0) && (gamma <= 1)){ 

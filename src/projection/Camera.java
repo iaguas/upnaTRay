@@ -38,12 +38,12 @@ public class Camera {
         
         // Base ortonormal dextrógira 
         this.zbase = new Vector3D(look.oposite().normalize());
-        this.xbase = (up.vecprod(zbase)).normalize();
-        this.ybase = zbase.vecprod(xbase); // normalizar es innecesario si los otros lo están
+        this.xbase = (up.crossProd(zbase)).normalize();
+        this.ybase = zbase.crossProd(xbase); // normalizar es innecesario si los otros lo están
         
         // Parámetros para la matriz de transformación
         final Vector3D oplook = look.oposite().normalize();
-        final float s = up.escprod(oplook);
+        final float s = up.dotProd(oplook);
         final double t = Math.pow(1-s*s, -0.5f);
         
         // Creación de la matriz de transformación
@@ -79,8 +79,6 @@ public class Camera {
      * @return Un punto cuyas coordenadas responden al sistema de coordenadas de la escena.
      */
     public Point3D toSceneCoord(Point3D P) {
-        //transformMatrix.transform(R);
-        
         return new Point3D(
             transformMatrix.getElement(0,0)*P.getX() + transformMatrix.getElement(0,1)*P.getY() + transformMatrix.getElement(0,2)*P.getZ() + transformMatrix.getElement(0,3)*P.getW(),
             transformMatrix.getElement(1,0)*P.getX() + transformMatrix.getElement(1,1)*P.getY() + transformMatrix.getElement(1,2)*P.getZ() + transformMatrix.getElement(1,3)*P.getW(),

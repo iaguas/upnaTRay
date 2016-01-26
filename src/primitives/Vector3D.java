@@ -65,7 +65,7 @@ public class Vector3D extends Tuple4f {
      * @param vector Segundo vector sobre el que multiplicar.
      * @return Vector resultado del producto.
      */
-    public Vector3D vecprod(Vector3D vector) {
+    public Vector3D crossProd(Vector3D vector) {
         return new Vector3D(
             getY() * vector.getZ() - getZ() * vector.getY(),  // Coordenada x
             getZ() * vector.getX() - getX() * vector.getZ(),  // Coordenada y
@@ -77,7 +77,7 @@ public class Vector3D extends Tuple4f {
      * @param vector Segundo vector sobre el que multiplicar.
      * @return Escalar resultado del producto.
      */
-    public float escprod(Vector3D vector) {
+    public float dotProd(Vector3D vector) {
         return getX() * vector.getX() + 
                getY() * vector.getY() + 
                getZ() * vector.getZ(); // Se evita w por ser 0 siempre.

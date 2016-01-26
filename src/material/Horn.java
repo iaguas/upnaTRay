@@ -28,7 +28,7 @@ public class Horn extends GlossyReflectance {
         // Esto se calcula como el coseno de alpha elevado a q.
         final Vector3D v = new Vector3D(P, V).normalize();
         final Vector3D I = new Vector3D(P, L).normalize(); 
-        final float cosineAlpha = 2 * I.escprod(normal) * v.escprod(normal) - v.escprod(I);
+        final float cosineAlpha = 2 * I.dotProd(normal) * v.dotProd(normal) - v.dotProd(I);
         return (float) Math.pow(cosineAlpha, q);
     }
     

@@ -34,10 +34,10 @@ public class Plane extends Object3D {
     @Override
     public Hit intersect(Ray r, float tmin) {
         
-        float c = normal.escprod(r.getDirection());
+        float c = normal.dotProd(r.getDirection());
         
         if (c < 0){ // Intersección por la cara exterior.
-            float b = normal.escprod(new Vector3D(point, r.getOrigin()));
+            float b = normal.dotProd(new Vector3D(point, r.getOrigin()));
             if (b >= 0) { // Intersección en el semiespacio posterior.
                 final float t = -b / c;
                 return new Hit(t, r.pointAtParameter(t), normal, color);

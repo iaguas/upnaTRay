@@ -37,9 +37,9 @@ public class Sphere extends Object3D {
         float t = 0;
         
         Vector3D v = new Vector3D(r.getOrigin(), center);
-        float c = v.escprod(v) - radius*radius; 
+        float c = v.dotProd(v) - radius*radius; 
         if (c > 0) { // Punto origen del rayo fuera de la esfera.
-            float b = v.escprod(r.getDirection());
+            float b = v.dotProd(r.getDirection());
             
             if (b >= 0) { // El centro de la esfera en el semiespacio posterior.
                 if (c == b*b) {
