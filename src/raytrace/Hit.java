@@ -9,6 +9,7 @@ package raytrace;
 import java.awt.Color;
 import primitives.Point3D;
 import primitives.Vector3D;
+import material.Material;
 
 /**
  * Clase con la que se representa el impacto de un rayo en un objeto.
@@ -23,6 +24,7 @@ public class Hit {
     private Point3D intersectionPoint;
     private Vector3D normal;
     private Color color;
+    private Material mat;
     
     /**
      * Objeto estático para reconocer cuando no se golpea con ningún objeto.
@@ -34,19 +36,20 @@ public class Hit {
     private Hit(final float t){
         this.t = t;
     }
-    
+
     /**
      * Método constructor de la implementación del impacto.
      * @param t Distancia de intersección t.
      * @param intersectionPoint Punto de intersección.
      * @param normal Vector normal.
-     * @param color Color del objeto en el impacto.
+     * @param mat Material del objeto golpeado.
      */
-    public Hit(final float t, final Point3D intersectionPoint, final Vector3D normal, final Color color){
+    public Hit(final float t, final Point3D intersectionPoint, final Vector3D normal, final Material mat){
         this.t = t;
         this.intersectionPoint = intersectionPoint;
         this.normal = normal;
-        this.color = color;
+        this.mat = mat;
+        this.color = mat.getColor();
     }
 
     /**
@@ -71,5 +74,29 @@ public class Hit {
      */
     public float getT() {
         return t;
+    }
+
+    /**
+     * Método de acceso al Material del objeto.
+     * @return Material mat.
+     */
+    public Material getMaterial() {
+        return mat;
+    }
+
+    /**
+     * Método de acceso al punto de intersección del impacto.
+     * @return Punto de intersección del impacto.
+     */
+    public Point3D getIntersectionPoint() {
+        return new Point3D(intersectionPoint);
+    }
+
+    /** 
+     * Método de acceso a la normal de la superficie del punto de intersección del impacto.
+     * @return Vector normal de la superficie del punto de intersección del impacto.
+     */
+    public Vector3D getNormal() {
+        return new Vector3D(normal);
     }
 }

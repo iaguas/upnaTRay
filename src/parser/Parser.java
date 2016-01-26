@@ -9,6 +9,12 @@ package parser;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.util.StringTokenizer;
+
+import ilumination.Lights;
+import ilumination.Omnidirectional;
+import ilumination.Spot;
+import material.LaFortuneWilliemsMaterial;
+import material.PhongMaterial;
 import primitives.Group;
 import primitives.Object3D;
 import primitives.Plane;
@@ -279,7 +285,7 @@ public class Parser {
         // Finalizar lectura
         line = in.readLine();
         
-        return new Sphere(color, center, radius);
+        return new Sphere(new LaFortuneWilliemsMaterial(color), center, radius);
         
       }
       case "Triangle":
@@ -328,7 +334,7 @@ public class Parser {
         // Finalizar lectura
         line = in.readLine();
         
-        return new Triangle(color, A, B, C);
+        return new Triangle(new PhongMaterial(color), A, B, C);
       }
       case "Plane":
       {
@@ -362,7 +368,7 @@ public class Parser {
         // Finalizar lectura
         line = in.readLine();
         
-        return new Plane(color, point, normal);
+        return new Plane(new PhongMaterial(color), point, normal);
       }
       case "Group":
       {
@@ -387,5 +393,14 @@ public class Parser {
     
     return null;
     
-  }
+ }
+
+    public Lights parseLights() {
+        Lights lights = new Lights();
+        Omnidirectional l = new Omnidirectional(new Point3D(15,15,15), 4.0f);
+        lights.addObject(0, l);
+        Spot s = new Spot(new Point3D(12,12,20), 10000.0f, (float) ((float) 2*Math.PI), new Point3D(0,0,0));
+        lights.addObject(1, s);
+        return lights;
+    }
 }

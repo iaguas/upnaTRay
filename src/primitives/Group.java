@@ -67,8 +67,17 @@ public class Group extends Object3D{
                 hmin = h;
             }
 	}
-    
         return hmin;
+    }
+
+    @Override
+    public boolean intersect(final Ray r, final Point3D P) {
+        boolean hasIntersection = false;
+        Iterator<Object3D> it = list.iterator();
+	while (! hasIntersection && it.hasNext()) {
+            hasIntersection = it.next().intersect(r, P);
+	}
+        return hasIntersection;
     }
     
 }
