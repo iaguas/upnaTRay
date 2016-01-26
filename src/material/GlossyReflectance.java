@@ -38,5 +38,13 @@ public abstract class GlossyReflectance {
      */
     public abstract float reflectance (final Point3D P, final Vector3D normal,
             final Point3D V, final Point3D L);
+
+    /**
+     * Método de acceso al exponente de lustre especular.
+     * @return Exponente de lustre especular q.
+     */
+    float getQ() {
+        return q;
+    }
     
 }
