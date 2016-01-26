@@ -29,6 +29,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import ilumination.Lights;
 import parser.Parser;
 import primitives.Group;
 import projection.Camera;
@@ -70,11 +71,13 @@ public class UpnaTRay extends JFrame{
      * @throws java.lang.Exception Excepción lanzada.
      */
     public static void main(String[] args) throws Exception{
+        img = generateImage("scenes/scene0");
         canvas = new UpnaTRay();
         canvas.setSize(W+16, H+59);
         canvas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         canvas.setTitle("upnaTRay - imagen renderizada");
         pane = canvas.getContentPane();
+        pane.add(new ImagePanel(img));
         canvas.setVisible(true);
     }
     
@@ -103,8 +106,6 @@ public class UpnaTRay extends JFrame{
             {
                 saveFile = new File(filePath + ".png");
             }
-            
-            
         }
         catch(HeadlessException ex) {
             JOptionPane.showMessageDialog(null,"Su archivo no se ha podido guardar",
@@ -119,31 +120,39 @@ public class UpnaTRay extends JFrame{
      * @return Un objeto imagen img que contiene la imagen generada.
      * @throws Exception (probablemente tendrá que ver con archivos).
      */
-    private static Image generateImage(String filename) throws Exception{
+    public static Image generateImage(String filename) throws Exception{
         Parser parser = new Parser(new BufferedReader(new FileReader(filename)));
         Camera cam = parser.parseCamera();
         Projection proj = parser.parseProjection();
         cam.setProjection(proj);
         Color bcolor = parser.parseBackgroundColor();
         Group scene = parser.parseGroup();
-        Image image = new Image(img.getWidth(), img.getHeight(), bcolor);
-        image.synthesis(scene, cam);
+        Lights lights = parser.parseLights();
+        Image image = new Image(W, H, bcolor);
+        image.synthesis(scene, cam, lights);
         return image;
     }
-
-    private static Image generateImage(File file) throws Exception{
+    
+    /**
+     * Generador de una imagen para mostrar a partir de un archivo dado.
+     * @param file Fichero que contiene la descripción de la escena.
+     * @return Un objeto imagen img que contiene la imagen generada.
+     * @throws Exception (probablemente tendrá que ver con archivos).
+     */
+    public static Image generateImage(File file) throws Exception{
         Parser parser = new Parser(new BufferedReader(new FileReader(file)));
         Camera cam = parser.parseCamera();
         Projection proj = parser.parseProjection();
         cam.setProjection(proj);
         Color bcolor = parser.parseBackgroundColor();
         Group scene = parser.parseGroup();
+        Lights lights = parser.parseLights();
         Image image = new Image(W, H, bcolor);
-        image.synthesis(scene, cam);
+        image.synthesis(scene, cam, lights);
         return image;
     }
     
-    class MenuListener implements ActionListener {
+    private class MenuListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             String actionCommand = e.getActionCommand();

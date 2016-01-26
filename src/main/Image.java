@@ -6,9 +6,13 @@
  */
 package main;
 
+import ilumination.Lights;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import primitives.Group;
+import material.Material;
+import primitives.Point3D;
+import primitives.Vector3D;
 import projection.Camera;
 import raytrace.Hit;
 import raytrace.Ray;
@@ -52,19 +56,41 @@ public class Image {
         
         // Calcula la intersercción con el grupo de objectos de la escena.
 	for (int m=0; m<W; ++m)
-		for(int n=0; n<H; ++n){
-			final Ray ray = rg.getRay(m,n);
-                // Calcula el valor de color del píxel en base al resultado de la 
-                // intersección y a la iluminación aplicada sobre él.
-			final Hit hit = scene.intersect(ray, tmin);
-			if(hit.hits())
-                            putPixel(m, n, hit.getColor());
-			else
-                            // Si el rayo no choca con ningún pixel, se aplica el color de fondo.
-                            putPixel(m, n, backgroundColor);
-                }
+            for(int n=0; n<H; ++n){
+                    final Ray ray = rg.getRay(m,n);
+            // Calcula el valor de color del píxel en base al resultado de la 
+            // intersección y a la iluminación aplicada sobre él.
+                    final Hit hit = scene.intersect(ray, tmin);
+                    if(hit.hits())
+                        putPixel(m, n, hit.getColor());
+                    else
+                        // Si el rayo no choca con ningún pixel, se aplica el color de fondo.
+                        putPixel(m, n, backgroundColor);
+            }
     }
     
+    public void synthesis (final Group scene, final Camera cam, final Lights L) {
+        final float tmin = cam.getProjection().getDistance();
+        final RayGenerator rg = cam.getRayGenerator(W, H);
+        
+        for (int m=0; m<W; ++m)
+            for(int n=0; n<H; ++n){
+                final Ray ray = rg.getRay(m, n);
+                final Hit h = scene.intersect(ray, tmin);
+                if(h.hits()){
+                    final Material mat = h.getMaterial();
+                    final Point3D P = h.getIntersectionPoint();
+                    final Vector3D normal = h.getNormal();
+                    final Point3D V = ray.getOrigin();
+                    final Color color = mat.getColor(scene, L, P, normal, V);               
+                    putPixel(m, n, color);
+                }
+                else // Si el rayo no choca con ningún pixel, se aplica el color de fondo.
+                    putPixel(m, n, backgroundColor);
+
+            }
+    }
+        
     /**
      * Método para disponer el color de un píxel en su localización adecuada de la imagen.
      * @param m Posición del píxel en el eje X.
