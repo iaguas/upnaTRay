@@ -47,7 +47,7 @@ public class LaFortuneWilliemsMaterial extends Material {
             final int r = (int) (col.getRed() + c.getRed());
             final int g = (int) (col.getGreen() + c.getGreen());
             final int b = (int) (col.getBlue() + c.getBlue());
-            c = new Color(r>255 ? 255 : r, g>255 ? 255 : g, b>255 ? 255 : b);
+            c = new Color(r>255 ? 255 : (r<0 ? 0 : r), g>255 ? 255 : (g<0 ? 0 : g), b>255 ? 255 : (b<0 ? 0 : b));
 	}
         
         // Ahora podría calcular la iluminación indirecta (global). 
@@ -65,7 +65,7 @@ public class LaFortuneWilliemsMaterial extends Material {
         final int r = (int) (color.getRed() * l/3);
         final int g = (int) (color.getGreen() * l/3);
         final int b = (int) (color.getBlue() * l/3);
-        return new Color(r>255 ? 255 : r, g>255 ? 255 : g, b>255 ? 255 : b);
+        return new Color(r>255 ? 255 : (r<0 ? 0 : r), g>255 ? 255 : (g<0 ? 0 : g), b>255 ? 255 : (b<0 ? 0 : b));
     }
     
     @Override
@@ -74,7 +74,7 @@ public class LaFortuneWilliemsMaterial extends Material {
         final int g = (int) (color.getGreen() * irradAmb/3 * ka);
         final int b = (int) (color.getBlue() * irradAmb/3 * ka);
         
-        return new Color(r>255 ? 255 : r, g>255 ? 255 : g, b>255 ? 255 : b);
+        return new Color(r>255 ? 255 : (r<0 ? 0 : r), g>255 ? 255 : (g<0 ? 0 : g), b>255 ? 255 : (b<0 ? 0 : b));
     }
     
 }

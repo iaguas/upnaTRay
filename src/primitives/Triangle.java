@@ -88,14 +88,16 @@ public class Triangle extends Object3D {
     }
     
     @Override
-    public boolean intersect(Ray r, Point3D P) {    
+    public boolean intersect(Ray r, Point3D P, float tmax) {    
         float cc = normal.dotProd(r.getDirection());
         
         if (cc < 0){ // Intersección por la cara exterior.
             float bb = normal.dotProd(new Vector3D(a, r.getOrigin()));
             if (bb >= 0) { // Intersección en el semiespacio posterior.
                 final float alpha = -bb / cc;
-                
+                if (alpha > tmax) // Me aseguro que el objeto esté entre el punto y el origen del rayo.
+                    return false;
+          
                 // Se evita la implementación de cramer directamente.
                 final Vector3D AB = new Vector3D(this.a, this.b);
                 final Vector3D AC = new Vector3D(this.a, this.c);

@@ -35,7 +35,8 @@ public class Omnidirectional extends Light{
         
         // 2. Determinación de obstaculos por medio de rayo de sombra.
         final Ray r = new Ray(position, P);
-        final boolean hasIntersection = G.intersect(r, P);
+        final float tmax = P.distance(position);
+        final boolean hasIntersection = G.intersect(r, P, tmax);
         if(hasIntersection){
             //System.out.println("por aquí");
             return 0.0f;

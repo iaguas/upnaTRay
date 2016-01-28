@@ -65,7 +65,8 @@ public class CircleDirectional extends Light{
         
         // Acabar la segunda parte con el punto obtenido.
         final Ray r = new Ray(Q, P);
-        final boolean hasIntersection = G.intersect(r, P);
+        final float tmax = P.distance(position);
+        final boolean hasIntersection = G.intersect(r, P, tmax);
         if(hasIntersection){
             return 0.0f;
         }

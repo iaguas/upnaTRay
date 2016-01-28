@@ -60,7 +60,8 @@ public abstract class Object3D {
      * objetos que se encuentran en la escena.
      * @param r Rayo de sombra emitido por la fuente de luz.
      * @param P Punto de intersección con el objeto conocido.
+     * @param tmax Distancia al cuadrado entre el punto y el origen del rayo.
      * @return Si el rayo intersecta con algún objeto de la escena o no.
      */    
-    public abstract boolean intersect(final Ray r, final Point3D P);
+    public abstract boolean intersect(final Ray r, final Point3D P, final float tmax);
 }

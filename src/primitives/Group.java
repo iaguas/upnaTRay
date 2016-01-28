@@ -71,11 +71,11 @@ public class Group extends Object3D{
     }
 
     @Override
-    public boolean intersect(final Ray r, final Point3D P) {
+    public boolean intersect(final Ray r, final Point3D P, float tmax) {
         boolean hasIntersection = false;
         Iterator<Object3D> it = list.iterator();
 	while (! hasIntersection && it.hasNext()) {
-            hasIntersection = it.next().intersect(r, P);
+            hasIntersection = it.next().intersect(r, P, tmax);
 	}
         return hasIntersection;
     }

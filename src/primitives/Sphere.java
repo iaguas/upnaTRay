@@ -78,13 +78,13 @@ public class Sphere extends Object3D {
     }
 
     @Override
-    public boolean intersect(Ray r, Point3D P) {
+    public boolean intersect(Ray r, Point3D P, float tmax) {
         Vector3D v = new Vector3D(r.getOrigin(), center);
         final float c = v.dotProd(v) - radius*radius;
         if (c > 0) { // Punto origen del rayo fuera de la esfera.
             final float b = v.dotProd(r.getDirection());
             if (b >= 0) // El centro de la esfera en el semiespacio posterior.
-                if (c == b*b) {
+                if (c == b*b && tmax > b) { // Me aseguro también de que el rayo esté en la zona anterior al punto P
                     final Point3D intersection = r.pointAtParameter(b);
                     final Vector3D separation = new Vector3D(P, intersection);
                     final float moduleSquare = separation.dotProd(separation);
@@ -95,6 +95,8 @@ public class Sphere extends Object3D {
                     final float tp = b + d;
                     final float tm = c / tp;
                     final float t = Math.min(tm, tp);
+                    if (tmax < t) // Me aseguro que el objeto esté entre el origen del rayo y P
+                        return false;
                     final Point3D intersection = r.pointAtParameter(t);
                     final Vector3D separation = new Vector3D(P, intersection);
                     final float moduleSquare = separation.dotProd(separation);

@@ -51,8 +51,7 @@ public class Camera {
         transformMatrix.setColumn(0,
             (float) t * (up.y*oplook.z - up.z*oplook.y),
             (float) t * (up.z*oplook.x - up.x*oplook.z),
-            (float) t * (up
-                    .x*oplook.y - up.y*oplook.x),
+            (float) t * (up.x*oplook.y - up.y*oplook.x),
             0.0f);
         transformMatrix.setColumn(1,
             (float) t * (up.x-s*oplook.x),

@@ -56,11 +56,13 @@ public class Plane extends Object3D {
     }
 
     @Override
-    public boolean intersect(Ray r, Point3D P) {
+    public boolean intersect(Ray r, Point3D P, float tmax) {
         final float denominator = normal.dotProd(r.getDirection().oposite());
         if (denominator > 0){ // Tengo cuidado de no divir por 0
             final Vector3D AR = new Vector3D(point, r.getOrigin());
             final float a = AR.dotProd(normal) / denominator;
+            if (a > tmax) // Me aseguro que el objeto esté entre el punto y el origen del rayo.
+                return false;
             final Point3D intersection = r.pointAtParameter(a);
             final Vector3D separation = new Vector3D(P, intersection);
             final float moduleSquare = separation.dotProd(separation);
