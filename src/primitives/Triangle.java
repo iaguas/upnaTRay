@@ -59,11 +59,10 @@ public class Triangle extends Object3D {
 
     @Override
     public Hit intersect(Ray r, float tmin){
-        final Vector3D norm = (new Vector3D(this.a, this.b)).crossProd(new Vector3D(this.a, this.c));
-        final float cc = norm.dotProd(r.getDirection());
+        final float cc = normal.dotProd(r.getDirection());
         
         if (cc < 0){ // Intersección por la cara exterior.
-            final float bb = norm.dotProd(new Vector3D(a, r.getOrigin()));
+            final float bb = normal.dotProd(new Vector3D(a, r.getOrigin()));
             if (bb >= 0) { // Intersección en el semiespacio posterior.
                 final float alpha = -bb / cc;
                 
@@ -78,7 +77,7 @@ public class Triangle extends Object3D {
                 if ((beta >= 0) && (beta <= 1)){
                     if ((gamma >= 0) && (gamma <= 1)){ 
                         if ((beta + gamma) <= 1){ 
-                            return new Hit(alpha, r.pointAtParameter(alpha), norm, mat);
+                            return new Hit(alpha, r.pointAtParameter(alpha), normal, mat);
                         }
                     }
                 }
@@ -90,11 +89,10 @@ public class Triangle extends Object3D {
     
     @Override
     public boolean intersect(Ray r, Point3D P) {    
-        Vector3D norm = (new Vector3D(this.a, this.b)).crossProd(new Vector3D(this.a, this.c));
-        float cc = norm.dotProd(r.getDirection());
+        float cc = normal.dotProd(r.getDirection());
         
         if (cc < 0){ // Intersección por la cara exterior.
-            float bb = norm.dotProd(new Vector3D(a, r.getOrigin()));
+            float bb = normal.dotProd(new Vector3D(a, r.getOrigin()));
             if (bb >= 0) { // Intersección en el semiespacio posterior.
                 final float alpha = -bb / cc;
                 
@@ -112,7 +110,7 @@ public class Triangle extends Object3D {
                             final Point3D intersection = r.pointAtParameter(alpha);
                             final Vector3D separation = new Vector3D(P, intersection);
                             final float moduleSquare = separation.dotProd(separation);
-                            return moduleSquare > 1.0e-8;
+                            return moduleSquare > 1.0e-7;
                         }
                     }
                 }

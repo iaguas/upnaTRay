@@ -46,34 +46,26 @@ public class Plane extends Object3D {
     
     @Override
     public Hit intersect(Ray r, float tmin) {
-        
-        final float c = normal.dotProd(r.getDirection());
-        
-        if (c < 0){ // Intersección por la cara exterior.
-            final float b = normal.dotProd(new Vector3D(point, r.getOrigin()));
-            if (b >= 0) { // Intersección en el semiespacio posterior.
-                final float t = -b / c;
-                return new Hit(t, r.pointAtParameter(t), normal, mat);
-            }
+        final float denominator = normal.dotProd(r.getDirection().oposite());
+        if (denominator > 0){ // Tengo cuidado de no divir por 0
+            final Vector3D AR = new Vector3D(point, r.getOrigin());
+            final float a = AR.dotProd(normal) / denominator;
+            return new Hit(a, r.pointAtParameter(a), normal, mat);
         }
         return Hit.VoidHit;
     }
 
     @Override
     public boolean intersect(Ray r, Point3D P) {
-               
-        final float c = normal.dotProd(r.getDirection());
-        
-        if (c < 0){ // Intersección por la cara exterior.
-            final float b = normal.dotProd(new Vector3D(point, r.getOrigin()));
-            if (b >= 0) { // Intersección en el semiespacio posterior.
-                final float t = -b / c;
-                final Point3D intersection = r.pointAtParameter(t);
-                final Vector3D separation = new Vector3D(P, intersection);
-                final float moduleSquare = separation.dotProd(separation);
-                return moduleSquare > 1.0e-8;
+        final float denominator = normal.dotProd(r.getDirection().oposite());
+        if (denominator > 0){ // Tengo cuidado de no divir por 0
+            final Vector3D AR = new Vector3D(point, r.getOrigin());
+            final float a = AR.dotProd(normal) / denominator;
+            final Point3D intersection = r.pointAtParameter(a);
+            final Vector3D separation = new Vector3D(P, intersection);
+            final float moduleSquare = separation.dotProd(separation);
+            return moduleSquare > 1.0e-7;
             }
-        }
         return false;
     }
 }
