@@ -23,35 +23,48 @@ public class CircleDirectional extends Light{
 
     public CircleDirectional(Point3D position, float intensity, Vector3D direction, float radius) {
         super(position, intensity);
-        this.direction = direction;
+        this.direction = direction.normalize();
         this.radius = radius;
     }
 
     @Override
     public float irradiance(Group G, Point3D P, Vector3D normal) {
+        Point3D Q = null; // Punto necesario para conocer el inicio del rayo.
         // 1. Determinación de inclusión del punto P en el campo iluminado.
         // Calculo si la distancia entre el punto y el más cercano del eje es mayor
         // o menor del eje.
-        final Vector3D RB = new Vector3D(P, position);
-        if(direction.dotProd(normal) == 0) { // El rayo es paralelo al cilindro.
+        final Vector3D PL = new Vector3D(P, position);
+        // 1a. El rayo es paralelo al cilindro.
+        if(direction.dotProd(normal) == 0) { 
             final Vector3D vCrossU = direction.crossProd(normal);
-            final float squareDistance = RB.dotProd(vCrossU);
+            final float squareDistance = PL.dotProd(vCrossU);
             if(squareDistance > radius*radius) {
                 return 0;
             }
-        }
-        else { // El rayo no es paralelo.
-            final float SquareModule = RB.dotProd(RB);
-            final float NormalDotRB = RB.dotProd(normal);
-            final float squareDistance = SquareModule - NormalDotRB * NormalDotRB;        
-            if(squareDistance > radius*radius) {
-                return 0;
-            }
-        }
-
             
-        // 2. Determinación de obstaculos por medio de rayo de sombra.
-        final Ray r = new Ray(position, P);
+            // 2a. Determinación de obstaculos por medio de rayo de sombra (paralelos).
+            // Se debe utilizar como punto de referencia del rayo uno que esté situado
+            // en el plano de la luz y vertical a P.
+            final float NormalDotPL = PL.dotProd(normal);
+            Q = (normal.multiply(NormalDotPL)).sumPoint(P);    
+        }
+        // 1b. El rayo no es paralelo.
+        else {
+            final float SquareModule = PL.dotProd(PL);
+            final float NormalDotPL = PL.dotProd(normal);
+            final float squareDistance = SquareModule - NormalDotPL * NormalDotPL;        
+            if(squareDistance > radius*radius) {
+                return 0;
+            }
+            
+            // 2b. Determinación de obstaculos por medio de rayo de sombra (NO paralelos).
+            // Se debe utilizar como punto de referencia del rayo uno que esté situado
+            // en el plano de la luz y vertical a P.
+            Q = (normal.multiply(NormalDotPL)).sumPoint(P);        
+        }
+        
+        // Acabar la segunda parte con el punto obtenido.
+        final Ray r = new Ray(Q, P);
         final boolean hasIntersection = G.intersect(r, P);
         if(hasIntersection){
             return 0.0f;
