@@ -36,6 +36,20 @@ public class PhongMaterial extends Material {
         kd = 1.0f;
     }
 
+    /**
+     * Método constructor incluyendo el color y con parámetros de la ecuación.
+     * @param color Color del material.
+     * @param ka Parámetro de la luz ambiental.
+     * @param ks Parámetro de la luz especular.
+     * @param kd Parámetro de la luz directa.
+     */
+    public PhongMaterial(Color color, float ka, float ks, float kd) {
+        super(color);
+        this.ka = ka;
+        this.ks = ks;
+        this.kd = kd;
+    }
+    
     @Override
     public Color getColor(Group G, Lights L, Point3D P, Vector3D normal, Point3D V, int it) {
         

@@ -28,10 +28,10 @@ public abstract class Material {
      */
     protected GlossyReflectance Fs;
     final private boolean specular;
-    
+        
     /** 
      * Método constructor del material con su color, dejando constante la función de reflectancia y las propiedades del material.
-     * @param color 
+     * @param color Color del material
      */
     public Material(Color color){
         this.color = color;

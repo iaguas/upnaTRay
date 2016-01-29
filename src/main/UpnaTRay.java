@@ -71,7 +71,7 @@ public class UpnaTRay extends JFrame{
      * @throws java.lang.Exception Excepción lanzada.
      */
     public static void main(String[] args) throws Exception{
-        img = generateImage("scenes/scene0");
+        img = generateImage("scenes/scene1");
         canvas = new UpnaTRay();
         canvas.setSize(W+16, H+59);
         canvas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -126,8 +126,8 @@ public class UpnaTRay extends JFrame{
         Projection proj = parser.parseProjection();
         cam.setProjection(proj);
         Color bcolor = parser.parseBackgroundColor();
-        Group scene = parser.parseGroup();
         Lights lights = parser.parseLights();
+        Group scene = parser.parseGroup();
         Image image = new Image(W, H, bcolor);
         image.synthesis(scene, cam, lights);
         return image;
@@ -145,8 +145,8 @@ public class UpnaTRay extends JFrame{
         Projection proj = parser.parseProjection();
         cam.setProjection(proj);
         Color bcolor = parser.parseBackgroundColor();
-        Group scene = parser.parseGroup();
         Lights lights = parser.parseLights();
+        Group scene = parser.parseGroup();
         Image image = new Image(W, H, bcolor);
         image.synthesis(scene, cam, lights);
         return image;

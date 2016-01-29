@@ -17,7 +17,7 @@ public class Blinn extends GlossyReflectance {
 
     /**
      * Método constructor del funcional de reflectancia glossy de Blinn.
-     * @param q 
+     * @param q Exponente de lustre especular.
      */
     public Blinn(final float q) {
         super(q);

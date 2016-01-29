@@ -55,7 +55,7 @@ public class Lights {
      * @return Devuelve el valor de la irradiancia ambiente.
      */
     public float getAmbientIrradiance() {
-        return 0.7f;
+        return ambientIrradiance;
     }
 
     /**

@@ -17,7 +17,7 @@ public class Horn extends GlossyReflectance {
 
     /**
      * Método constructor del funcional de reflectancia glossy de Horn.
-     * @param q 
+     * @param q Exponente de lustre especular.
      */
     public Horn(final float q) {
         super(q);
