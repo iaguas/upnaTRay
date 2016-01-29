@@ -38,7 +38,6 @@ public class Omnidirectional extends Light{
         final float tmax = P.distance(position);
         final boolean hasIntersection = G.intersect(r, P, tmax);
         if(hasIntersection){
-            //System.out.println("por aquí");
             return 0.0f;
         }
         

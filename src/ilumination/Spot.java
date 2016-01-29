@@ -20,6 +20,7 @@ public class Spot extends Light{
     
     private final float angleCosine;
     private final Point3D axisPoint;
+    private final float atenuation;
 
     /**
      * Método constructor de la fuente luminosa spot. 
@@ -32,6 +33,22 @@ public class Spot extends Light{
         super(position, intensity);
         this.angleCosine = (float) Math.cos(Math.toRadians(angle));
         this.axisPoint = axisPoint;
+        this.atenuation = 1.0f/angleCosine; // Para evitarla si no se utiliza.
+    }
+    
+    /**
+     * Método constructor de la fuente luminosa spot. 
+     * @param position Posición de la fuente luminosa.
+     * @param intensity Intensidad de emisión de la fuente luminosa.
+     * @param angle Ángulo de apertura de la fuente luminosa spot en grados.
+     * @param axisPoint Punto del eje para definir el mismo.
+     * @param atenuation Coeficiente alfa de atenunación.
+     */
+    public Spot(Point3D position, float intensity, float angle, Point3D axisPoint, float atenuation) {
+        super(position, intensity);
+        this.angleCosine = (float) Math.cos(Math.toRadians(angle));
+        this.axisPoint = axisPoint;
+        this.atenuation = 1.0f/angleCosine; // Para evitarla si no se utiliza.
     }
 
     @Override
@@ -60,7 +77,7 @@ public class Spot extends Light{
         final float normalDotI = normal.dotProd(I);
         final float distanceSquare = PS.dotProd(PS);
         
-        return intensity / (4 * (float) Math.PI * distanceSquare) * normalDotI;
+        return intensity / (4 * (float) Math.PI * distanceSquare) * (float) Math.pow(normalDotI, atenuation);
     }
     
 }
