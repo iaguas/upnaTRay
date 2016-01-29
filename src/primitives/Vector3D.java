@@ -110,6 +110,15 @@ public class Vector3D extends Tuple4f {
     }
     
     /**
+     * Implementación de la resta de vectores
+     * @param v Vector sustraendo de la operación.
+     * @return La resta entre los vectores argumento.
+     */
+    public Vector3D minus(Vector3D v) {
+        return new Vector3D(this.getX()-v.getX(), this.getY()-v.getY(), this.getZ()-v.getZ());
+    }
+    
+    /**
      * Implementación de un vector por un escalar
      * @param f Escalar
      * @return Vector v multiplicado por el escalar f.

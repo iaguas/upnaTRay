@@ -82,7 +82,7 @@ public class Image {
                     final Point3D P = h.getIntersectionPoint();
                     final Vector3D normal = h.getNormal();
                     final Point3D V = ray.getOrigin();
-                    final Color color = mat.getColor(scene, L, P, normal, V);               
+                    final Color color = mat.getColor(scene, L, P, normal, V, 1);               
                     putPixel(m, n, color);
                 }
                 else // Si el rayo no choca con ningún pixel, se aplica el color de fondo.

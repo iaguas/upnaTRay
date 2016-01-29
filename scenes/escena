@@ -1,0 +1,36 @@
+Camera {
+	position 50.0 25.0 200.0
+	centerOfView 5.5 0 0
+	up 0.0 1.0 0.0
+}
+Perspective {
+        distance 60.0
+	fov      15.0
+	aspect   1
+}
+Background {
+	color 0 0 0
+}
+Group {
+	numObjects 4
+                Plane {
+                    A 0.0 -5.0 0.0
+                    B 0.0 1.0 0.0
+                    color 200 200 200
+                }
+                Sphere {
+                    center -10.0 -1.0 10.0
+                    radious 4.0
+                    color 205 0 0
+                }
+                Sphere {
+                    center 15 5 0
+                    radious 10.0
+                    color 0 50 255
+                }
+                Sphere {
+                    center 0.0 0.0 20.0
+                    radious 5.0
+                    color 128 128 128
+                }
+}

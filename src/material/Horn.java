@@ -29,7 +29,7 @@ public class Horn extends GlossyReflectance {
         final Vector3D v = new Vector3D(P, V).normalize();
         final Vector3D I = new Vector3D(P, L).normalize(); 
         final float cosineAlpha = 2 * I.dotProd(normal) * v.dotProd(normal) - v.dotProd(I);
-        return (float) Math.pow(cosineAlpha, q);
+        return (float) Math.pow(Math.max(cosineAlpha, 0.0f), q);
     }
     
 }

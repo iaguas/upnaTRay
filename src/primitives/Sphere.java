@@ -88,7 +88,7 @@ public class Sphere extends Object3D {
                     final Point3D intersection = r.pointAtParameter(b);
                     final Vector3D separation = new Vector3D(P, intersection);
                     final float moduleSquare = separation.dotProd(separation);
-                    return moduleSquare > 1.0e-7;
+                    return moduleSquare > 1.0e-5;
                 }
                 else if (c < b*b){
                     final float d = (float) Math.sqrt(b * b - c);
@@ -100,7 +100,7 @@ public class Sphere extends Object3D {
                     final Point3D intersection = r.pointAtParameter(t);
                     final Vector3D separation = new Vector3D(P, intersection);
                     final float moduleSquare = separation.dotProd(separation);
-                    return moduleSquare > 1.0e-7;
+                    return moduleSquare > 1.0e-5;
                 }
         }
         return false;

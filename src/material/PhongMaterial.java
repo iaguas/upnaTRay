@@ -12,6 +12,8 @@ import java.awt.Color;
 import primitives.Group;
 import primitives.Point3D;
 import primitives.Vector3D;
+import raytrace.Hit;
+import raytrace.Ray;
 
 /**
  * Clase para implementar la fórmula de Phong de coloreado en los materiales.
@@ -30,26 +32,49 @@ public class PhongMaterial extends Material {
     public PhongMaterial(Color color) {
         super(color);
         ka = 0.9f;
-        ks = 0.5f;
-        kd = 0.4f;
+        ks = 0.4f;
+        kd = 1.0f;
     }
 
     @Override
-    public Color getColor(Group G, Lights L, Point3D P, Vector3D normal, Point3D V) {
+    public Color getColor(Group G, Lights L, Point3D P, Vector3D normal, Point3D V, int it) {
         
         Color c = this.ambientColor(L.getAmbientIrradiance());
         
         // Iluminación directa (local).
         int i = 0;
         while(i < L.getNumberElements()) {
-            Color col = this.directShader(G, P, normal, V, L.getObject(i++));
+            final Color col = this.directShader(G, P, normal, V, L.getObject(i++));
             final int r = (int) (col.getRed() + c.getRed());
             final int g = (int) (col.getGreen() + c.getGreen());
             final int b = (int) (col.getBlue() + c.getBlue());
-            c = new Color(r>255 ? 255 : r, g>255 ? 255 : g, b>255 ? 255 : b);
+            c = new Color(r>255 ? 255 : (r<0 ? 0 : r), g>255 ? 255 : (g<0 ? 0 : g), b>255 ? 255 : (b<0 ? 0 : b));
 	}
         
         // Ahora podría calcular la iluminación indirecta (global). 
+        if(it>0) {
+            if (this.isSpecular()) {
+                // Generar el rayo secundario rmirror especular ideal.
+                Vector3D v = (new Vector3D(P,V)).normalize();
+                Vector3D rayDirector = (v.minus(normal.multiply(2 * normal.dotProd(v)))).oposite();
+                final Ray rmirror = new Ray(P, rayDirector);
+                //System.out.println("Rayos. Sombra: " + v.dotProd(normal) + " Reflejado: " + rayDirector.dotProd(normal));
+                final Hit h = G.intersect(rmirror, 0);
+                if(h.hits()){                
+                    final Material mat = h.getMaterial();
+                    final Point3D Ps = h.getIntersectionPoint();
+                    final Vector3D ns = h.getNormal();
+                    final Vector3D nprime = normal.multiply(0.00001f);
+                    final Point3D Pprime = new Point3D(nprime.sumPoint(P));
+                    final Color cs = getColor(G, L, Ps, ns, Pprime, it-1);
+                    
+                    final int r = (int) (ks*cs.getRed() + (1-ks)*c.getRed());
+                    final int g = (int) (ks*cs.getGreen() + (1-ks)*c.getGreen());
+                    final int b = (int) (ks*cs.getBlue() + (1-ks)*c.getBlue());
+                    c = new Color(r>255 ? 255 : (r<0 ? 0 : r), g>255 ? 255 : (g<0 ? 0 : g), b>255 ? 255 : (b<0 ? 0 : b));
+                }
+            }
+        }
         
        return c; 
     }

@@ -36,7 +36,7 @@ public abstract class Material {
     public Material(Color color){
         this.color = color;
         this.Fs = new Blinn(5);
-        this.specular = false;
+        this.specular = true;
     }
     
     /** 
@@ -71,11 +71,12 @@ public abstract class Material {
      * @param P Punto P sobre el que calcular el color.
      * @param normal Vector normal a la superficie en el punto P.
      * @param V Punto V donde se situa la cámara.
+     * @param it Número de iteraciones de la función recursiva.
      * @return Devuelve el color en el punto P teniendo en cuenta todos los objetos
      *         así como los objetos de la función de coloreado.
      */
     public abstract Color getColor(final Group G, final Lights L, final Point3D P,
-            final Vector3D normal, final Point3D V);
+            final Vector3D normal, final Point3D V, int it);
     
     /**
      * Genera el color de un punto P de la imagen teniendo en cuenta la iluminación directa.

@@ -30,7 +30,7 @@ public class Blinn extends GlossyReflectance {
         final Vector3D I = new Vector3D(P, L); 
         final Vector3D h = (v.plus(I)).normalize();
         final float cosineHalfAlpha = normal.dotProd(h);
-        return (float) Math.pow(cosineHalfAlpha, q);
+        return (float) Math.pow(Math.max(0,cosineHalfAlpha), q);
     }
     
 }
