@@ -1,0 +1,38 @@
+\documentclass[a4paper,11pt,final]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+%\usepackage[papersize={210mm,297mm},lmargin=2.2cm,rmargin=2.2cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{multicol} 
+\usepackage{subfigure}
+%opening
+\title{Práctica de creación de un trazador de rayos con iluminaci�n}
+\author{Iñigo Aguas Ardaiz\\[10mm]Computación Gráfica\\Curso 2015-2016\\Máster Universitario en Ingeniería Informática\\ Universidad Pública de Navarra - Nafarroako Unibertsitate Publikoa\\[10mm]}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Este documento pretende ser un resumen del trabajo que se presenta intentando mostrar cómo se ha llevado a cabo así como la formulación que ha tenido.
+\end{abstract}
+
+\section{Formulación del trabajo}
+En un primer momento se estudió y se preparó un proyecto básico con clases y paquetes vacíos según se entendía era más conveniente. Esta estructura se ha mantenido hasta el final del proyecto. Además, se empezó a transcribir todo el código que se había facilitado por parte del profesor así como el que era fácilmente deducible (constructores y métodos de acceso).
+
+Después se implementaron las clases relativas a la cámara, las proyecciones y los rayos con la intención de poder tener un sistema básico. Más tarde se continuó implementado los objetos, empezando por las esferas. Al empezar a probar esto, se encontraron varios fallos en la implementación básica de cómo funcionar con vectores y puntos. Aquí se encontraron tanto errores de transcripción matemática como referentes a la forma de usar el espacio de memoria de JAVA. Es esto último una de las cosas que más me ha costado arreglar, ya que a día de hoy aun tengo dudas sobre esto y que no he acabado de ver hasta el final cómo se distribuyen las clases a lo largo de la ejecución. Para solucionarlo, en todo momento se crean instancias nuevas haciendo que el recolector de basura trabaje intensivamente.
+
+Por otra parte, se han tenido problemas para situar la cámara en el lugar adecuado para ver las figuras, no teniendo éxito en algunos casos. Además, el parser que nos suministró el profesor hubo que adaptarlo a la implementación hecha en esta práctica, además de corregir algún error de las escenas de la gramática, que solo se ha corregido en {\em scene0}. No se ha tenido tiempo para implementar la proyección ojo de pez.
+
+\section{Distribución temporal del trabajo y reflexión personal}
+
+Para hacer el trabajo se ha utilizado un sistema de gestión de proyectos, Redmine. Se puede encotrar por tanto cómo se han utilziado las 21.6 horas en el siguiente enlace: \href{http://redmine.martinarroyo.net/projects/upnatray}{http://redmine.martinarroyo.net/projects/upnatray}. Además, se puede encontrar todo el código versionado en el siguiente enlace de github: 
+\href{https://github.com/iaguas/upnaTRay}{https://github.com/iaguas/upnaTRay}
+
+No puedo terminar este documento sin hacer una pequeña reflexión personal sobre el uso de las horas de trabajo en los últimos meses. Ciertamente asumir el cargo de Presidente del Consejo de Estudiantes ha hecho que mi rendimiento en el máster haya disminuido, pero esta disminución ha llegado a niveles mucho mayores de los que yo hubiera querido/esperado. Por esta razón, sé que este trabajo necesita de más tiempo para presentar una versión básica en condiciones. Por lo anteriormente dicho me disculpo y haré lo necesario para que en la siguiente versión no ocurra esto. Ciertamente han sido muchas cosas en un mes y me he visto sobrepasado.
+
+\end{document}
